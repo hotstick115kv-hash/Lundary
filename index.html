@@ -15,15 +15,17 @@
   }
 
   .card {
-    background: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.92);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255,255,255,0.6);
     border-radius: 1.25rem;
     box-shadow: 0 8px 32px rgba(0,0,0,0.08);
   }
 
-  .btn { display:block; width:100%; border-radius:0.875rem; padding:0.85rem 1.25rem; font-weight:700; font-size:1.05rem; text-align:center; cursor:pointer; transition:all 0.2s ease; border:none; }
-  .btn:active { transform: scale(0.98); }
+  .btn { display:block; width:100%; border-radius:0.875rem; padding:0.85rem 1.25rem;
+    font-weight:700; font-size:1.05rem; text-align:center; cursor:pointer;
+    transition:all 0.2s ease; border:none; }
+  .btn:active { transform:scale(0.98); }
   .btn:disabled { opacity:0.6; cursor:not-allowed; transform:none !important; }
 
   .btn-green  { background:linear-gradient(135deg,#22c55e,#16a34a); color:#fff; box-shadow:0 4px 14px rgba(34,197,94,0.35); }
@@ -35,7 +37,8 @@
   .btn-orange { background:linear-gradient(135deg,#f97316,#ea580c); color:#fff; box-shadow:0 4px 14px rgba(249,115,22,0.35); }
   .btn-orange:not(:disabled):hover { box-shadow:0 6px 20px rgba(249,115,22,0.5); transform:translateY(-1px); }
 
-  .btn-ghost  { background:transparent; color:#64748b; border:1.5px solid #e2e8f0; padding:0.65rem 1rem; font-size:0.9rem; }
+  .btn-ghost  { background:transparent; color:#64748b; border:1.5px solid #e2e8f0;
+    padding:0.65rem 1rem; font-size:0.9rem; }
   .btn-ghost:hover { background:#f1f5f9; color:#334155; }
 
   input, select {
@@ -45,19 +48,28 @@
   }
   input:focus, select:focus { border-color:#06b6d4; box-shadow:0 0 0 3px rgba(6,182,212,0.15); }
 
+  /* amount display — readonly styled differently */
+  input[readonly] {
+    background:#f8fafc; color:#0f172a; font-weight:700;
+    border-color:#bae6fd; cursor:default;
+  }
+
   .label { font-size:0.82rem; font-weight:600; color:#64748b; margin-bottom:0.25rem; }
   .field { display:flex; flex-direction:column; gap:0.25rem; }
 
   .file-box {
     border:2px dashed #cbd5e1; border-radius:0.75rem; padding:0.8rem;
-    text-align:center; cursor:pointer; transition:border-color 0.2s; position:relative;
-    background:white;
+    text-align:center; cursor:pointer; transition:border-color 0.2s;
+    position:relative; background:white;
   }
   .file-box:hover { border-color:#06b6d4; }
   .file-box input[type=file] {
     position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%;
   }
-  .file-box .preview { max-height:80px; max-width:100%; border-radius:0.5rem; margin-top:0.4rem; object-fit:cover; }
+  .file-box .preview {
+    max-height:80px; max-width:100%; border-radius:0.5rem;
+    margin-top:0.4rem; object-fit:cover;
+  }
 
   .section { display:none; }
   .section.active { display:block; }
@@ -69,11 +81,24 @@
   .order-card.receive { border-left:4px solid #22c55e; }
   .order-card.deliver { border-left:4px solid #f97316; }
 
-  .badge { display:inline-block; font-size:0.72rem; font-weight:700; padding:0.2rem 0.55rem; border-radius:999px; }
+  .badge { display:inline-block; font-size:0.72rem; font-weight:700;
+    padding:0.2rem 0.55rem; border-radius:999px; }
   .badge-cash     { background:#dcfce7; color:#16a34a; }
   .badge-transfer { background:#dbeafe; color:#1d4ed8; }
   .badge-receive  { background:#f0fdf4; color:#16a34a; }
   .badge-deliver  { background:#fff7ed; color:#ea580c; }
+
+  .amount-display {
+    background: linear-gradient(135deg,#f0fdf4,#ecfdf5);
+    border: 2px solid #86efac;
+    border-radius: 0.875rem;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .amount-display .amount-label { font-size:0.82rem; color:#16a34a; font-weight:600; }
+  .amount-display .amount-value { font-size:1.4rem; font-weight:700; color:#15803d; }
 
   .spinner {
     display:inline-block; width:18px; height:18px;
@@ -118,22 +143,29 @@
 
     <div class="field">
       <div class="label">ชื่อลูกค้า *</div>
-      <input id="r-name" placeholder="เช่น สมชาย ใจดี">
+      <select id="r-name">
+        <option value="">-- เลือกชื่อ --</option>
+        <option value="แอร์">แอร์</option>
+        <option value="ออยล์">ออยล์</option>
+        <option value="เอ๊าะ">เอ๊าะ</option>
+      </select>
     </div>
+
     <div class="field">
-      <div class="label">เบอร์โทรศัพท์ *</div>
-      <input id="r-phone" type="tel" placeholder="0812345678" maxlength="10">
+      <div class="label">จำนวนชิ้น *</div>
+      <input id="r-qty" type="number" min="1" placeholder="0" oninput="calcAmount('r')">
     </div>
-    <div class="grid grid-cols-2 gap-3">
-      <div class="field">
-        <div class="label">จำนวนชิ้น *</div>
-        <input id="r-qty" type="number" min="1" placeholder="0">
+
+    <!-- Auto-calculated amount display -->
+    <div class="amount-display">
+      <div>
+        <div class="amount-label">💰 จำนวนเงิน (อัตโนมัติ)</div>
+        <div class="text-xs text-slate-400">จำนวนชิ้น × 6.06</div>
       </div>
-      <div class="field">
-        <div class="label">จำนวนเงิน (บาท) *</div>
-        <input id="r-amount" type="number" min="0" placeholder="0">
-      </div>
+      <div class="amount-value" id="r-amountDisplay">0.00 ฿</div>
     </div>
+    <input type="hidden" id="r-amount" value="0">
+
     <div class="field">
       <div class="label">วิธีชำระเงิน *</div>
       <select id="r-payment" onchange="toggleSlip('r')">
@@ -141,10 +173,12 @@
         <option value="โอนเงิน">🏦 โอนเงิน</option>
       </select>
     </div>
+
     <div class="field">
       <div class="label">หมายเหตุ (ไม่บังคับ)</div>
       <input id="r-note" placeholder="เช่น ผ้าสีขาว ระวังหด">
     </div>
+
     <div class="field">
       <div class="label">รูปผ้า / ใบรับงาน (ไม่บังคับ)</div>
       <div class="file-box">
@@ -153,6 +187,7 @@
         <img id="r-workPrev" class="preview hidden mx-auto">
       </div>
     </div>
+
     <div id="r-slipArea" class="field hidden">
       <div class="label">สลิปโอนเงิน *</div>
       <div class="file-box">
@@ -175,22 +210,29 @@
 
     <div class="field">
       <div class="label">ชื่อลูกค้า *</div>
-      <input id="d-name" placeholder="เช่น สมชาย ใจดี">
+      <select id="d-name">
+        <option value="">-- เลือกชื่อ --</option>
+        <option value="แอร์">แอร์</option>
+        <option value="ออยล์">ออยล์</option>
+        <option value="เอ๊าะ">เอ๊าะ</option>
+      </select>
     </div>
+
     <div class="field">
-      <div class="label">เบอร์โทรศัพท์ *</div>
-      <input id="d-phone" type="tel" placeholder="0812345678" maxlength="10">
+      <div class="label">จำนวนชิ้น *</div>
+      <input id="d-qty" type="number" min="1" placeholder="0" oninput="calcAmount('d')">
     </div>
-    <div class="grid grid-cols-2 gap-3">
-      <div class="field">
-        <div class="label">จำนวนชิ้น *</div>
-        <input id="d-qty" type="number" min="1" placeholder="0">
+
+    <!-- Auto-calculated amount display -->
+    <div class="amount-display">
+      <div>
+        <div class="amount-label">💰 จำนวนเงิน (อัตโนมัติ)</div>
+        <div class="text-xs text-slate-400">จำนวนชิ้น × 6.06</div>
       </div>
-      <div class="field">
-        <div class="label">จำนวนเงิน (บาท) *</div>
-        <input id="d-amount" type="number" min="0" placeholder="0">
-      </div>
+      <div class="amount-value" id="d-amountDisplay">0.00 ฿</div>
     </div>
+    <input type="hidden" id="d-amount" value="0">
+
     <div class="field">
       <div class="label">วิธีชำระเงิน *</div>
       <select id="d-payment" onchange="toggleSlip('d')">
@@ -198,10 +240,12 @@
         <option value="โอนเงิน">🏦 โอนเงิน</option>
       </select>
     </div>
+
     <div class="field">
       <div class="label">หมายเหตุ (ไม่บังคับ)</div>
       <input id="d-note" placeholder="เช่น ส่งแล้ว ลูกค้ารับเรียบร้อย">
     </div>
+
     <div class="field">
       <div class="label">รูปผ้าที่ส่ง (ไม่บังคับ)</div>
       <div class="file-box">
@@ -210,6 +254,7 @@
         <img id="d-workPrev" class="preview hidden mx-auto">
       </div>
     </div>
+
     <div id="d-slipArea" class="field hidden">
       <div class="label">สลิปโอนเงิน *</div>
       <div class="file-box">
@@ -229,11 +274,17 @@
   <!-- ===== SEARCH ===== -->
   <div id="sec-search" class="section card p-5 space-y-4">
     <h2 class="font-bold text-lg text-slate-800">🔍 ตรวจสอบ Order</h2>
+
     <div class="field">
-      <div class="label">เบอร์โทรศัพท์</div>
-      <input id="s-phone" type="tel" placeholder="0812345678" maxlength="10"
-        onkeydown="if(event.key==='Enter') searchOrder()">
+      <div class="label">ชื่อลูกค้า</div>
+      <select id="s-name">
+        <option value="">-- เลือกชื่อ --</option>
+        <option value="แอร์">แอร์</option>
+        <option value="ออยล์">ออยล์</option>
+        <option value="เอ๊าะ">เอ๊าะ</option>
+      </select>
     </div>
+
     <button class="btn btn-blue" id="searchBtn" onclick="searchOrder()">🔎 &nbsp;ค้นหา</button>
     <div id="orders" class="space-y-2"></div>
     <button class="btn btn-ghost" onclick="show('menu')">← กลับเมนูหลัก</button>
@@ -245,15 +296,14 @@
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbyf19zeCtZMnZQ2ao53wjZotbOyzGFgyF33cfKa2xmyC2Y6SjECDXgJEt_f6LAMxpCA/exec"
+const RATE = 6.06
 
 /* ===== Navigation ===== */
 function show(section) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'))
   document.getElementById('sec-' + section).classList.add('active')
   window.scrollTo({ top: 0, behavior: 'smooth' })
-  if (section === 'menu') {
-    document.getElementById('orders').innerHTML = ''
-  }
+  if (section === 'menu') document.getElementById('orders').innerHTML = ''
 }
 
 /* ===== Toast ===== */
@@ -262,6 +312,15 @@ function toast(msg, duration = 3500) {
   t.textContent = msg
   t.classList.add('show')
   setTimeout(() => t.classList.remove('show'), duration)
+}
+
+/* ===== Auto-calculate amount ===== */
+function calcAmount(prefix) {
+  const qty = parseFloat(document.getElementById(prefix + '-qty').value) || 0
+  const amount = qty * RATE
+  document.getElementById(prefix + '-amount').value = amount.toFixed(2)
+  document.getElementById(prefix + '-amountDisplay').textContent =
+    amount > 0 ? amount.toFixed(2) + ' ฿' : '0.00 ฿'
 }
 
 /* ===== Toggle slip area ===== */
@@ -276,10 +335,7 @@ function previewFile(inputId, previewId) {
   const prev = document.getElementById(previewId)
   if (file) {
     const reader = new FileReader()
-    reader.onload = e => {
-      prev.src = e.target.result
-      prev.classList.remove('hidden')
-    }
+    reader.onload = e => { prev.src = e.target.result; prev.classList.remove('hidden') }
     reader.readAsDataURL(file)
   } else {
     prev.classList.add('hidden')
@@ -290,7 +346,7 @@ function previewFile(inputId, previewId) {
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
     const r = new FileReader()
-    r.onload = () => resolve(r.result.split(',')[1])
+    r.onload  = () => resolve(r.result.split(',')[1])
     r.onerror = reject
     r.readAsDataURL(file)
   })
@@ -299,10 +355,9 @@ function fileToBase64(file) {
 /* ===== Submit form ===== */
 async function submitForm(type) {
   const p = type === 'receive' ? 'r' : 'd'
-  const name    = document.getElementById(p + '-name').value.trim()
-  const phone   = document.getElementById(p + '-phone').value.trim()
+  const name    = document.getElementById(p + '-name').value
   const qty     = document.getElementById(p + '-qty').value.trim()
-  const amount  = document.getElementById(p + '-amount').value.trim()
+  const amount  = document.getElementById(p + '-amount').value
   const payment = document.getElementById(p + '-payment').value
   const note    = document.getElementById(p + '-note').value.trim()
   const workEl  = document.getElementById(p + '-work')
@@ -310,8 +365,8 @@ async function submitForm(type) {
   const workFile = workEl.files[0]
   const slipFile = slipEl ? slipEl.files[0] : null
 
-  if (!name || !phone || !qty || !amount) { toast('⚠️ กรุณากรอกข้อมูลให้ครบถ้วน'); return }
-  if (phone.length < 9)                  { toast('⚠️ เบอร์โทรไม่ถูกต้อง'); return }
+  if (!name)                             { toast('⚠️ กรุณาเลือกชื่อลูกค้า'); return }
+  if (!qty || parseFloat(qty) < 1)       { toast('⚠️ กรุณากรอกจำนวนชิ้น'); return }
   if (payment === 'โอนเงิน' && !slipFile){ toast('⚠️ กรุณาแนบสลิปโอนเงิน'); return }
 
   const btn = document.getElementById(p + '-submitBtn')
@@ -320,9 +375,7 @@ async function submitForm(type) {
   btn.disabled = true
 
   try {
-    // Google Apps Script ไม่รองรับ multipart FormData จาก browser
-    // ส่งเป็น JSON + base64 แทน
-    const payload = { type, name, phone, qty, amount, payment, note }
+    const payload = { type, name, qty, amount, payment, note }
     if (workFile) {
       payload.workBase64 = await fileToBase64(workFile)
       payload.workName   = workFile.name
@@ -334,10 +387,8 @@ async function submitForm(type) {
       payload.slipType   = slipFile.type
     }
 
-    const res  = await fetch(API_URL, {
+    const res = await fetch(API_URL, {
       method: 'POST',
-      // GAS doPost รับ text/plain ได้ผ่าน e.postData.contents
-      // แต่ถ้า GAS ยังไม่รองรับ ให้ใช้ no-cors แบบ GET fallback
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
     })
@@ -347,12 +398,14 @@ async function submitForm(type) {
 
     const resultEl = document.getElementById(p + '-result')
     resultEl.classList.remove('hidden')
-    resultEl.innerHTML = `✅ บันทึกสำเร็จ!<br>Order ID: <span class="font-bold text-base">${data.orderId ?? '—'}</span>`
+    resultEl.innerHTML = `✅ บันทึกสำเร็จ! &nbsp; Order ID: <span class="font-bold text-base">${data.orderId ?? '—'}</span>`
 
-    // clear fields
-    ;[p+'-name', p+'-phone', p+'-qty', p+'-amount', p+'-note'].forEach(id => {
-      document.getElementById(id).value = ''
-    })
+    // reset form
+    document.getElementById(p + '-name').value = ''
+    document.getElementById(p + '-qty').value  = ''
+    document.getElementById(p + '-note').value = ''
+    document.getElementById(p + '-amount').value = '0'
+    document.getElementById(p + '-amountDisplay').textContent = '0.00 ฿'
     workEl.value = ''
     if (slipEl) slipEl.value = ''
     ;[p+'-workPrev', p+'-slipPrev'].forEach(id => {
@@ -372,8 +425,8 @@ async function submitForm(type) {
 
 /* ===== Search ===== */
 async function searchOrder() {
-  const phone = document.getElementById('s-phone').value.trim()
-  if (!phone) { toast('⚠️ กรุณากรอกเบอร์โทร'); return }
+  const name = document.getElementById('s-name').value
+  if (!name) { toast('⚠️ กรุณาเลือกชื่อลูกค้า'); return }
 
   const btn = document.getElementById('searchBtn')
   btn.innerHTML = '<span class="spinner"></span> กำลังค้นหา...'
@@ -381,7 +434,7 @@ async function searchOrder() {
   document.getElementById('orders').innerHTML = ''
 
   try {
-    const res  = await fetch(API_URL + '?phone=' + encodeURIComponent(phone))
+    const res  = await fetch(API_URL + '?name=' + encodeURIComponent(name))
     const data = await res.json()
     const container = document.getElementById('orders')
 
@@ -389,22 +442,22 @@ async function searchOrder() {
       container.innerHTML = `
         <div class="text-center py-6 text-slate-400">
           <div class="text-3xl mb-2">🔎</div>
-          <div>ไม่พบ Order สำหรับเบอร์นี้</div>
+          <div>ไม่พบ Order ของ <b>${name}</b></div>
         </div>`
       return
     }
 
     container.innerHTML = data.map(o => {
-      const isDeliver  = o.type === 'deliver'
-      const cardClass  = isDeliver ? 'deliver' : 'receive'
-      const typeLabel  = isDeliver ? '📤 ส่งผ้า' : '📥 รับผ้า'
-      const typeBadge  = isDeliver ? 'badge-deliver' : 'badge-receive'
-      const payBadge   = o.payment === 'โอนเงิน' ? 'badge-transfer' : 'badge-cash'
-      const payIcon    = o.payment === 'โอนเงิน' ? '🏦' : '💵'
-      const workLink   = o.work  ? `<a href="${o.work}"  target="_blank" class="text-sky-600 underline text-xs">📷 รูปผ้า</a>` : ''
-      const slipLink   = o.slip  ? `<a href="${o.slip}"  target="_blank" class="text-sky-600 underline text-xs">🧾 สลิป</a>` : ''
-      const dateStr    = o.date  ? `<span class="text-slate-400 text-xs">${o.date}</span>` : ''
-      const noteStr    = o.note  ? `<div class="text-slate-500 text-xs mt-1">📝 ${o.note}</div>` : ''
+      const isDeliver = o.type === 'deliver'
+      const cardClass = isDeliver ? 'deliver' : 'receive'
+      const typeLabel = isDeliver ? '📤 ส่งผ้า' : '📥 รับผ้า'
+      const typeBadge = isDeliver ? 'badge-deliver' : 'badge-receive'
+      const payBadge  = o.payment === 'โอนเงิน' ? 'badge-transfer' : 'badge-cash'
+      const payIcon   = o.payment === 'โอนเงิน' ? '🏦' : '💵'
+      const workLink  = o.work ? `<a href="${o.work}" target="_blank" class="text-sky-600 underline text-xs">📷 รูปผ้า</a>` : ''
+      const slipLink  = o.slip ? `<a href="${o.slip}" target="_blank" class="text-sky-600 underline text-xs">🧾 สลิป</a>` : ''
+      const dateStr   = o.date ? `<span class="text-slate-400 text-xs">${o.date}</span>` : ''
+      const noteStr   = o.note ? `<div class="text-slate-500 text-xs mt-1">📝 ${o.note}</div>` : ''
 
       return `
         <div class="order-card ${cardClass}">
@@ -416,7 +469,9 @@ async function searchOrder() {
             <span class="badge ${typeBadge}">${typeLabel}</span>
             <span class="badge ${payBadge}">${payIcon} ${o.payment}</span>
           </div>
-          <div class="text-slate-600">🧺 ${o.qty} ชิ้น &nbsp;|&nbsp; 💰 ${Number(o.amount).toLocaleString()} บาท</div>
+          <div class="text-slate-600">
+            🧺 ${o.qty} ชิ้น &nbsp;|&nbsp; 💰 ${Number(o.amount).toLocaleString('th-TH',{minimumFractionDigits:2})} บาท
+          </div>
           ${noteStr}
           <div class="flex gap-3 mt-2">${workLink}${slipLink}</div>
         </div>`
