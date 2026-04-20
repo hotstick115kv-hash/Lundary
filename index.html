@@ -2,378 +2,556 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Check List – รับ‑ส่งผ้า</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>🧺 Check List – รับ‑ส่งผ้า</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  * { font-family: 'Sarabun', sans-serif; box-sizing: border-box; }
-  body { background: linear-gradient(135deg,#e0f2fe 0%,#f0fdf4 100%); min-height:100vh; }
+  :root {
+    --green:  #22c55e; --green-dark: #15803d; --green-light: #dcfce7;
+    --orange: #f97316; --orange-dark: #c2410c; --orange-light: #ffedd5;
+    --blue:   #0ea5e9; --blue-dark:  #0369a1; --blue-light:   #dbeafe;
+    --purple: #a855f7; --purple-dark:#6b21a8; --purple-light: #f3e8ff;
+    --slate:  #64748b; --slate-light:#f8fafc;
+  }
+  * { font-family:'Sarabun',sans-serif; box-sizing:border-box; margin:0; padding:0; }
+  body {
+    background: linear-gradient(160deg, #c7e9fb 0%, #e8f5e9 50%, #fce4ec 100%);
+    min-height:100vh;
+  }
 
-  .card { background:rgba(255,255,255,0.92); backdrop-filter:blur(12px);
-    border:1px solid rgba(255,255,255,0.6); border-radius:1.25rem;
-    box-shadow:0 8px 32px rgba(0,0,0,0.08); }
+  /* === GLASS CARD === */
+  .card {
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border: 1px solid rgba(255,255,255,0.75);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.09), 0 1px 0 rgba(255,255,255,0.9) inset;
+  }
+  .card-sm {
+    background: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 1rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
 
-  .btn { display:block; width:100%; border-radius:0.875rem; padding:0.85rem 1.25rem;
-    font-weight:700; font-size:1.05rem; text-align:center; cursor:pointer;
-    transition:all 0.2s ease; border:none; }
-  .btn:active { transform:scale(0.98); }
-  .btn:disabled { opacity:0.6; cursor:not-allowed; transform:none !important; }
-  .btn-green  { background:linear-gradient(135deg,#22c55e,#16a34a); color:#fff; box-shadow:0 4px 14px rgba(34,197,94,0.35); }
-  .btn-green:not(:disabled):hover  { box-shadow:0 6px 20px rgba(34,197,94,0.5); transform:translateY(-1px); }
-  .btn-blue   { background:linear-gradient(135deg,#06b6d4,#0ea5e9); color:#fff; box-shadow:0 4px 14px rgba(6,182,212,0.35); }
-  .btn-blue:not(:disabled):hover   { box-shadow:0 6px 20px rgba(6,182,212,0.5); transform:translateY(-1px); }
-  .btn-orange { background:linear-gradient(135deg,#f97316,#ea580c); color:#fff; box-shadow:0 4px 14px rgba(249,115,22,0.35); }
-  .btn-orange:not(:disabled):hover { box-shadow:0 6px 20px rgba(249,115,22,0.5); transform:translateY(-1px); }
-  .btn-purple { background:linear-gradient(135deg,#a855f7,#7c3aed); color:#fff; box-shadow:0 4px 14px rgba(168,85,247,0.35); }
-  .btn-purple:not(:disabled):hover { box-shadow:0 6px 20px rgba(168,85,247,0.5); transform:translateY(-1px); }
-  .btn-ghost  { background:transparent; color:#64748b; border:1.5px solid #e2e8f0; padding:0.65rem 1rem; font-size:0.9rem; }
-  .btn-ghost:hover { background:#f1f5f9; color:#334155; }
+  /* === BUTTONS === */
+  .btn {
+    display: flex; align-items:center; justify-content:center; gap:0.5rem;
+    width:100%; border-radius:1rem; padding:0.9rem 1.25rem;
+    font-weight:700; font-size:1rem; cursor:pointer; border:none;
+    transition: all 0.18s cubic-bezier(.34,1.56,.64,1);
+    position:relative; overflow:hidden; letter-spacing:0.01em;
+  }
+  .btn::after {
+    content:''; position:absolute; inset:0;
+    background:rgba(255,255,255,0); transition:background 0.15s;
+  }
+  .btn:hover::after { background:rgba(255,255,255,0.12); }
+  .btn:active { transform:scale(0.97); }
+  .btn:disabled { opacity:0.55; cursor:not-allowed; transform:none !important; }
 
-  input, select { width:100%; padding:0.7rem 0.9rem; border:1.5px solid #e2e8f0;
-    border-radius:0.75rem; font-size:1rem; outline:none; transition:border-color 0.2s;
-    background:white; font-family:'Sarabun',sans-serif; }
-  input:focus, select:focus { border-color:#06b6d4; box-shadow:0 0 0 3px rgba(6,182,212,0.15); }
+  .btn-green  { background:linear-gradient(135deg,#4ade80,#16a34a); color:#fff; box-shadow:0 4px 18px rgba(34,197,94,0.4); }
+  .btn-blue   { background:linear-gradient(135deg,#38bdf8,#0369a1); color:#fff; box-shadow:0 4px 18px rgba(14,165,233,0.4); }
+  .btn-orange { background:linear-gradient(135deg,#fb923c,#c2410c); color:#fff; box-shadow:0 4px 18px rgba(249,115,22,0.4); }
+  .btn-purple { background:linear-gradient(135deg,#c084fc,#7c3aed); color:#fff; box-shadow:0 4px 18px rgba(168,85,247,0.4); }
+  .btn-ghost  { background:rgba(255,255,255,0.6); color:#475569; border:1.5px solid rgba(203,213,225,0.8); font-size:0.9rem; padding:0.65rem 1rem; }
+  .btn-ghost:hover { background:rgba(255,255,255,0.9); color:#1e293b; }
+  .btn-danger { background:linear-gradient(135deg,#f87171,#dc2626); color:#fff; box-shadow:0 4px 18px rgba(239,68,68,0.35); }
 
-  .label { font-size:0.82rem; font-weight:600; color:#64748b; margin-bottom:0.25rem; }
-  .field { display:flex; flex-direction:column; gap:0.25rem; }
+  /* === FORM === */
+  .field { display:flex; flex-direction:column; gap:0.3rem; }
+  .label { font-size:0.8rem; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.05em; }
 
-  .file-box { border:2px dashed #cbd5e1; border-radius:0.75rem; padding:0.8rem;
-    text-align:center; cursor:pointer; transition:border-color 0.2s;
-    position:relative; background:white; }
-  .file-box:hover { border-color:#06b6d4; }
+  input, select {
+    width:100%; padding:0.75rem 1rem; border:1.5px solid #e2e8f0;
+    border-radius:0.875rem; font-size:0.97rem; outline:none;
+    transition: all 0.2s; background:rgba(255,255,255,0.9);
+    font-family:'Sarabun',sans-serif; color:#0f172a;
+  }
+  input:focus, select:focus {
+    border-color:#38bdf8;
+    box-shadow: 0 0 0 3px rgba(56,189,248,0.18);
+    background:white;
+  }
+
+  /* === AMOUNT DISPLAY === */
+  .amount-box {
+    background: linear-gradient(135deg,#f0fdf4,#dcfce7);
+    border: 2px solid #86efac; border-radius: 1rem;
+    padding: 0.85rem 1.1rem;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .amount-box .a-label { font-size:0.78rem; font-weight:700; color:#16a34a; }
+  .amount-box .a-sub   { font-size:0.72rem; color:#86efac; margin-top:1px; }
+  .amount-box .a-val   { font-size:1.5rem; font-weight:800; color:#15803d; }
+
+  /* === FILE BOX === */
+  .file-box {
+    border: 2px dashed #cbd5e1; border-radius:0.875rem;
+    padding:0.85rem; text-align:center; cursor:pointer;
+    transition: all 0.2s; position:relative; background:rgba(255,255,255,0.6);
+  }
+  .file-box:hover { border-color:#38bdf8; background:rgba(56,189,248,0.04); }
   .file-box input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
-  .file-box .preview { max-height:80px; max-width:100%; border-radius:0.5rem; margin-top:0.4rem; object-fit:cover; }
+  .file-box .preview { max-height:90px; max-width:100%; border-radius:0.5rem; margin-top:0.5rem; object-fit:cover; }
 
+  /* === SECTION === */
   .section { display:none; }
   .section.active { display:block; }
 
-  .order-card { background:white; border:1.5px solid #e2e8f0; border-radius:0.875rem; padding:0.9rem 1rem; font-size:0.9rem; }
+  /* === ORDER CARD === */
+  .order-card {
+    background:rgba(255,255,255,0.85); border:1.5px solid #e2e8f0;
+    border-radius:1rem; padding:0.9rem 1rem; font-size:0.88rem;
+    transition: box-shadow 0.15s;
+  }
+  .order-card:hover { box-shadow:0 4px 16px rgba(0,0,0,0.09); }
   .order-card.receive { border-left:4px solid #22c55e; }
   .order-card.deliver { border-left:4px solid #f97316; }
 
-  .badge { display:inline-block; font-size:0.72rem; font-weight:700; padding:0.2rem 0.55rem; border-radius:999px; }
-  .badge-cash     { background:#dcfce7; color:#16a34a; }
-  .badge-transfer { background:#dbeafe; color:#1d4ed8; }
-  .badge-receive  { background:#f0fdf4; color:#16a34a; }
-  .badge-deliver  { background:#fff7ed; color:#ea580c; }
+  /* === BADGES === */
+  .badge {
+    display:inline-flex; align-items:center; gap:3px;
+    font-size:0.7rem; font-weight:700;
+    padding:0.18rem 0.6rem; border-radius:999px;
+  }
+  .b-cash     { background:#dcfce7; color:#15803d; }
+  .b-transfer { background:#dbeafe; color:#1d4ed8; }
+  .b-receive  { background:#f0fdf4; color:#16a34a; border:1px solid #bbf7d0; }
+  .b-deliver  { background:#fff7ed; color:#ea580c; border:1px solid #fed7aa; }
+  .b-name     { background:#f1f5f9; color:#475569; border:1px solid #e2e8f0; }
 
-  .amount-display { background:linear-gradient(135deg,#f0fdf4,#ecfdf5);
-    border:2px solid #86efac; border-radius:0.875rem; padding:0.75rem 1rem;
-    display:flex; align-items:center; justify-content:space-between; }
-  .amount-display .amount-label { font-size:0.82rem; color:#16a34a; font-weight:600; }
-  .amount-display .amount-value { font-size:1.4rem; font-weight:700; color:#15803d; }
+  /* === STAT CARDS === */
+  .stat-card {
+    border-radius:1.1rem; padding:1rem 1.1rem;
+    display:flex; align-items:center; gap:0.8rem;
+  }
+  .stat-icon { font-size:1.8rem; line-height:1; }
+  .stat-label { font-size:0.72rem; font-weight:700; opacity:0.7; letter-spacing:0.03em; }
+  .stat-val   { font-size:1.3rem; font-weight:800; margin-top:2px; }
+  .s-green  { background:linear-gradient(135deg,#dcfce7,#bbf7d0); color:#15803d; }
+  .s-orange { background:linear-gradient(135deg,#ffedd5,#fed7aa); color:#c2410c; }
+  .s-blue   { background:linear-gradient(135deg,#dbeafe,#bfdbfe); color:#1d4ed8; }
+  .s-purple { background:linear-gradient(135deg,#f3e8ff,#e9d5ff); color:#6b21a8; }
 
-  .stat-card { border-radius:1rem; padding:0.9rem 1rem; display:flex; align-items:center; gap:0.75rem; }
-  .stat-card .stat-icon { font-size:1.6rem; }
-  .stat-card .stat-label { font-size:0.75rem; font-weight:600; opacity:0.75; }
-  .stat-card .stat-value { font-size:1.25rem; font-weight:700; }
-  .stat-green  { background:linear-gradient(135deg,#dcfce7,#bbf7d0); color:#15803d; }
-  .stat-orange { background:linear-gradient(135deg,#ffedd5,#fed7aa); color:#c2410c; }
-  .stat-blue   { background:linear-gradient(135deg,#dbeafe,#bfdbfe); color:#1d4ed8; }
+  /* === TABS === */
+  .tab-bar { display:flex; background:rgba(241,245,249,0.8); border-radius:0.875rem; padding:0.22rem; gap:0.2rem; }
+  .tab-btn {
+    flex:1; padding:0.48rem; border-radius:0.65rem;
+    font-weight:700; font-size:0.82rem; cursor:pointer; border:none;
+    transition: all 0.2s; background:transparent; color:#94a3b8;
+  }
+  .tab-btn.active { background:white; color:#0f172a; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
 
-  .summary-table { width:100%; border-collapse:collapse; font-size:0.85rem; }
-  .summary-table th { background:#f1f5f9; color:#64748b; font-weight:700; padding:0.5rem 0.6rem;
-    text-align:left; border-bottom:1.5px solid #e2e8f0; }
-  .summary-table td { padding:0.5rem 0.6rem; border-bottom:1px solid #f1f5f9; }
-  .summary-table tr:hover td { background:#f8fafc; }
+  /* === TABLE === */
+  .tbl { width:100%; border-collapse:collapse; font-size:0.83rem; }
+  .tbl th { background:#f8fafc; color:#64748b; font-weight:700; padding:0.5rem 0.65rem;
+    text-align:left; border-bottom:1.5px solid #e2e8f0; font-size:0.75rem; letter-spacing:0.03em; }
+  .tbl td { padding:0.55rem 0.65rem; border-bottom:1px solid #f1f5f9; color:#334155; }
+  .tbl tr:last-child td { border-bottom:none; }
+  .tbl tr:hover td { background:#f8fafc; }
 
-  .tab-btn { flex:1; padding:0.5rem; border-radius:0.625rem; font-weight:600; font-size:0.85rem;
-    cursor:pointer; border:none; transition:all 0.2s; background:transparent; color:#94a3b8; }
-  .tab-btn.active { background:white; color:#0f172a; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
-  .tab-bar { display:flex; background:#f1f5f9; border-radius:0.75rem; padding:0.25rem; gap:0.25rem; }
-
-  .spinner { display:inline-block; width:18px; height:18px; border:2.5px solid rgba(255,255,255,0.4);
-    border-top-color:white; border-radius:50%; animation:spin 0.7s linear infinite;
-    vertical-align:middle; margin-right:6px; }
+  /* === SPINNER === */
+  .spinner {
+    display:inline-block; width:17px; height:17px;
+    border:2.5px solid rgba(255,255,255,0.35); border-top-color:white;
+    border-radius:50%; animation:spin 0.7s linear infinite; vertical-align:middle;
+  }
   @keyframes spin { to { transform:rotate(360deg); } }
 
-  .toast { position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%) translateY(80px);
-    background:#1e293b; color:white; padding:0.7rem 1.4rem; border-radius:999px;
-    font-size:0.92rem; font-weight:600; z-index:999; transition:transform 0.35s cubic-bezier(.34,1.56,.64,1);
-    white-space:nowrap; max-width:90vw; text-align:center; }
+  /* === TOAST === */
+  .toast {
+    position:fixed; bottom:1.75rem; left:50%;
+    transform: translateX(-50%) translateY(100px);
+    background:#1e293b; color:white;
+    padding:0.7rem 1.5rem; border-radius:999px;
+    font-size:0.9rem; font-weight:600; z-index:9999;
+    transition: transform 0.4s cubic-bezier(.34,1.56,.64,1);
+    white-space:nowrap; max-width:92vw; text-align:center;
+    box-shadow:0 8px 32px rgba(0,0,0,0.25);
+  }
   .toast.show { transform:translateX(-50%) translateY(0); }
 
-  .skeleton { background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 50%,#f1f5f9 75%);
-    background-size:200% 100%; animation:shimmer 1.2s infinite; border-radius:0.5rem; }
-  @keyframes shimmer { to { background-position:-200% 0; } }
+  /* === SKELETON === */
+  .skel {
+    background: linear-gradient(90deg,#f1f5f9 25%,#e9eef5 50%,#f1f5f9 75%);
+    background-size:300% 100%; animation:shim 1.4s infinite;
+    border-radius:0.75rem;
+  }
+  @keyframes shim { 0%{background-position:100% 0} 100%{background-position:-100% 0} }
 
-  .step { display:flex; align-items:flex-start; gap:0.75rem; }
-  .step-num { width:1.6rem; height:1.6rem; min-width:1.6rem; border-radius:50%;
-    background:#0ea5e9; color:white; font-weight:700; font-size:0.8rem;
-    display:flex; align-items:center; justify-content:center; margin-top:2px; }
-  .step-text { font-size:0.83rem; color:#475569; line-height:1.6; }
-  .step-text b { color:#0f172a; }
+  /* === SETUP STEPS === */
+  .step { display:flex; gap:0.8rem; align-items:flex-start; }
+  .step-n {
+    min-width:1.7rem; height:1.7rem; border-radius:50%;
+    background:linear-gradient(135deg,#38bdf8,#0369a1);
+    color:white; font-weight:800; font-size:0.78rem;
+    display:flex; align-items:center; justify-content:center;
+    margin-top:1px; box-shadow:0 2px 8px rgba(14,165,233,0.35);
+  }
+  .step-t { font-size:0.83rem; color:#475569; line-height:1.65; }
+  .step-t b { color:#0f172a; }
+  .step-t code {
+    background:#f1f5f9; color:#0369a1; padding:1px 6px;
+    border-radius:4px; font-family:monospace; font-size:0.8rem;
+  }
+
+  /* === URL INPUT === */
+  #setup-url {
+    font-size:0.78rem; word-break:break-all;
+    padding:0.8rem 1rem; letter-spacing:0.01em;
+  }
+
+  /* === PING DOT === */
+  @keyframes ping { 0%{transform:scale(1);opacity:0.8} 70%,100%{transform:scale(2);opacity:0} }
+  .ping-dot { position:relative; display:inline-block; width:8px; height:8px; }
+  .ping-dot span {
+    position:absolute; inset:0; border-radius:50%;
+    background:#22c55e; animation:ping 1.2s cubic-bezier(0,0,.2,1) infinite;
+  }
+  .ping-dot i { position:absolute; inset:0; border-radius:50%; background:#22c55e; }
+
+  /* === MENU ICON BUTTONS === */
+  .menu-btn {
+    display:flex; align-items:center; gap:1rem;
+    width:100%; border-radius:1.25rem; padding:1rem 1.25rem;
+    background:rgba(255,255,255,0.7); border:1.5px solid rgba(255,255,255,0.9);
+    cursor:pointer; transition:all 0.2s; text-align:left;
+    box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  }
+  .menu-btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,0.1); }
+  .menu-btn:active { transform:scale(0.98); }
+  .menu-btn .mb-icon {
+    width:2.6rem; height:2.6rem; border-radius:0.875rem;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.35rem; flex-shrink:0;
+  }
+  .menu-btn .mb-title { font-weight:700; font-size:0.97rem; color:#1e293b; }
+  .menu-btn .mb-sub   { font-size:0.75rem; color:#94a3b8; margin-top:1px; }
+  .mb-g  { background:linear-gradient(135deg,#bbf7d0,#4ade80); }
+  .mb-o  { background:linear-gradient(135deg,#fed7aa,#fb923c); }
+  .mb-b  { background:linear-gradient(135deg,#bae6fd,#38bdf8); }
+  .mb-p  { background:linear-gradient(135deg,#e9d5ff,#c084fc); }
+
+  /* === RESULT BOX === */
+  .result-box {
+    border-radius:1rem; padding:0.9rem 1.1rem;
+    text-align:center; font-weight:700; font-size:0.92rem;
+  }
+  .result-ok  { background:#f0fdf4; border:1.5px solid #86efac; color:#15803d; }
+  .result-err { background:#fef2f2; border:1.5px solid #fca5a5; color:#dc2626; }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width:4px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:#cbd5e1; border-radius:99px; }
 </style>
 </head>
 <body>
+<div id="app" class="max-w-md mx-auto px-4 py-7 space-y-4">
 
-<div class="max-w-md mx-auto px-4 py-8 space-y-5">
-
-  <!-- Header -->
-  <div class="text-center space-y-1">
-    <div class="text-4xl">🧺</div>
-    <h1 class="text-2xl font-bold text-slate-800">Check List</h1>
-    <p class="text-sm text-slate-500">ตรวจสอบรับ‑ส่งผ้า &amp; การชำระเงิน</p>
+  <!-- ─── HEADER ─── -->
+  <div class="text-center space-y-1 py-2">
+    <div style="font-size:2.8rem;line-height:1.1">🧺</div>
+    <h1 style="font-size:1.6rem;font-weight:800;color:#1e293b;letter-spacing:-0.02em">Check List</h1>
+    <p style="font-size:0.82rem;color:#94a3b8;font-weight:500">ตรวจสอบรับ‑ส่งผ้า &amp; การชำระเงิน</p>
   </div>
 
-  <!-- ===== SETUP ===== -->
+  <!-- ═══════════════════ SETUP ═══════════════════ -->
   <div id="sec-setup" class="section card p-5 space-y-4">
-    <div class="text-center space-y-1 pb-3 border-b border-slate-100">
-      <div class="text-3xl">⚙️</div>
-      <h2 class="font-bold text-lg text-slate-800">ตั้งค่า API URL</h2>
-      <p class="text-xs text-slate-400">ทำครั้งเดียว ระบบจะจำให้อัตโนมัติ</p>
+
+    <div class="text-center pb-3" style="border-bottom:1px solid rgba(0,0,0,0.05)">
+      <div style="font-size:2.2rem">⚙️</div>
+      <h2 style="font-size:1.15rem;font-weight:800;color:#1e293b;margin-top:4px">ตั้งค่า API URL</h2>
+      <p style="font-size:0.78rem;color:#94a3b8;margin-top:2px">ทำครั้งเดียว — ระบบจะจำให้อัตโนมัติ</p>
     </div>
 
-    <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 space-y-3">
-      <p class="text-xs font-bold text-blue-600 uppercase tracking-wide">📋 วิธีได้ URL จาก Apps Script</p>
+    <!-- Steps -->
+    <div style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #bae6fd;border-radius:1rem;padding:1rem 1.1rem" class="space-y-3">
+      <p style="font-size:0.72rem;font-weight:800;color:#0369a1;letter-spacing:0.08em">📋 วิธีรับ URL จาก Google Apps Script</p>
       <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-text">เปิด Google Sheet → เมนู <b>Extensions → Apps Script</b></div>
+        <div class="step-n">1</div>
+        <div class="step-t">เปิด Google Sheet → เมนู <b>Extensions</b> → <b>Apps Script</b></div>
       </div>
       <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-text">วางโค้ดทั้งหมดที่ได้รับ กด <b>Save</b></div>
+        <div class="step-n">2</div>
+        <div class="step-t">ลบโค้ดเดิมออก วางโค้ดใหม่ที่ได้รับ กด <b>Save</b> (💾)</div>
       </div>
       <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-text">กด <b>Deploy → New deployment → Web app</b><br>ตั้ง <b>Who has access: Anyone</b> → Deploy</div>
+        <div class="step-n">3</div>
+        <div class="step-t">กด <b>Deploy → New deployment</b> → เลือก <b>Web app</b><br>
+          ตั้ง <b>Execute as:</b> <code>Me</code> &nbsp;|&nbsp; <b>Who has access:</b> <code>Anyone</code>
+        </div>
       </div>
       <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-text">คัดลอก <b>Web app URL</b> ที่ได้ มาวางด้านล่าง</div>
+        <div class="step-n">4</div>
+        <div class="step-t">คลิก <b>Deploy</b> → คัดลอก <b>Web app URL</b> มาวางด้านล่าง</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.6);border-radius:0.75rem;padding:0.6rem 0.8rem">
+        <p style="font-size:0.72rem;color:#64748b;font-weight:600">⚠️ URL ที่ถูกต้องจะมีหน้าตาแบบนี้:</p>
+        <p style="font-size:0.68rem;color:#94a3b8;word-break:break-all;margin-top:2px;font-family:monospace">https://script.google.com/macros/s/<b>XXXXX</b>/exec</p>
       </div>
     </div>
 
     <div class="field">
-      <div class="label">📌 Web App URL *</div>
-      <input id="setup-url" type="url"
-        placeholder="https://script.google.com/macros/s/.../exec"
-        style="font-size:0.8rem;">
+      <div class="label">📌 วาง Web App URL ที่นี่</div>
+      <input id="setup-url" type="url" placeholder="https://script.google.com/macros/s/AKfycby7eWAGQV0f5hiEil7DW1FLxi_Y91HxLux0aOaOkmzkBAs6dG7Wyy610snSoJiDUxywMg/exec" autocomplete="off" spellcheck="false">
     </div>
-    <div id="setup-err" class="hidden bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-red-600 text-sm font-semibold text-center"></div>
-    <button class="btn btn-green" onclick="saveSetup()">✅ &nbsp;บันทึกและเริ่มใช้งาน</button>
+
+    <div id="setup-err" style="display:none;background:#fef2f2;border:1.5px solid #fca5a5;border-radius:0.875rem;padding:0.75rem 1rem;color:#dc2626;font-size:0.85rem;font-weight:700;text-align:center"></div>
+
+    <button class="btn btn-blue" onclick="saveSetup()">✅ &nbsp;บันทึกและเริ่มใช้งาน</button>
   </div>
 
-  <!-- ===== MENU ===== -->
-  <div id="sec-menu" class="section card p-5 space-y-3">
-    <div class="flex items-center justify-between pb-2 border-b border-slate-100 mb-1">
-      <span class="font-bold text-slate-700">เมนูหลัก</span>
-      <span class="text-xs bg-green-100 text-green-700 font-bold px-3 py-1 rounded-full">🟢 API เชื่อมต่อแล้ว</span>
+  <!-- ═══════════════════ MENU ═══════════════════ -->
+  <div id="sec-menu" class="section space-y-3">
+
+    <!-- API status bar -->
+    <div class="card-sm" style="padding:0.65rem 1rem;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <div class="ping-dot"><span></span><i></i></div>
+        <span style="font-size:0.78rem;font-weight:700;color:#15803d">เชื่อมต่อ API แล้ว</span>
+      </div>
+      <button onclick="show('setup')" style="font-size:0.72rem;color:#94a3b8;background:none;border:none;cursor:pointer;font-family:inherit;padding:2px 6px;border-radius:6px;transition:color 0.15s" onmouseover="this.style.color='#475569'" onmouseout="this.style.color='#94a3b8'">⚙️ เปลี่ยน URL</button>
     </div>
-    <button class="btn btn-green"  onclick="show('receive')">📥 &nbsp;ยืนยันข้อมูลรับผ้า</button>
-    <button class="btn btn-orange" onclick="show('deliver')">📤 &nbsp;ยืนยันข้อมูลส่งผ้า</button>
-    <button class="btn btn-blue"   onclick="show('search')">🔍 &nbsp;ตรวจสอบ Order</button>
-    <button class="btn btn-purple" onclick="show('dashboard')">📊 &nbsp;Dashboard & สรุป</button>
-    <button class="btn btn-ghost" style="font-size:0.82rem;padding:0.5rem 1rem;" onclick="show('setup')">⚙️ เปลี่ยน API URL</button>
+
+    <div class="card p-4 space-y-2">
+      <p style="font-size:0.72rem;font-weight:800;color:#94a3b8;letter-spacing:0.06em;padding-bottom:2px">เมนูหลัก</p>
+
+      <button class="menu-btn" onclick="show('receive')">
+        <div class="mb-icon mb-g">📥</div>
+        <div><div class="mb-title">ยืนยันข้อมูลรับผ้า</div><div class="mb-sub">บันทึกการรับผ้าจากลูกค้า</div></div>
+        <span style="margin-left:auto;color:#cbd5e1;font-size:1.1rem">›</span>
+      </button>
+      <button class="menu-btn" onclick="show('deliver')">
+        <div class="mb-icon mb-o">📤</div>
+        <div><div class="mb-title">ยืนยันข้อมูลส่งผ้า</div><div class="mb-sub">บันทึกการส่งผ้าคืนลูกค้า</div></div>
+        <span style="margin-left:auto;color:#cbd5e1;font-size:1.1rem">›</span>
+      </button>
+      <button class="menu-btn" onclick="show('search')">
+        <div class="mb-icon mb-b">🔍</div>
+        <div><div class="mb-title">ตรวจสอบ Order</div><div class="mb-sub">ค้นหาประวัติรับ‑ส่งผ้า</div></div>
+        <span style="margin-left:auto;color:#cbd5e1;font-size:1.1rem">›</span>
+      </button>
+      <button class="menu-btn" onclick="show('dashboard')">
+        <div class="mb-icon mb-p">📊</div>
+        <div><div class="mb-title">Dashboard & สรุป</div><div class="mb-sub">ยอดรับ‑ส่ง และรายงานสถิติ</div></div>
+        <span style="margin-left:auto;color:#cbd5e1;font-size:1.1rem">›</span>
+      </button>
+    </div>
   </div>
 
-  <!-- ===== RECEIVE FORM ===== -->
+  <!-- ═══════════════════ RECEIVE ═══════════════════ -->
   <div id="sec-receive" class="section card p-5 space-y-4">
-    <h2 class="font-bold text-lg text-slate-800">📥 ยืนยันข้อมูลรับผ้า</h2>
+    <div style="display:flex;align-items:center;gap:0.75rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(0,0,0,0.05)">
+      <div style="width:2.2rem;height:2.2rem;background:linear-gradient(135deg,#bbf7d0,#4ade80);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;font-size:1.2rem">📥</div>
+      <h2 style="font-size:1.1rem;font-weight:800;color:#1e293b">ยืนยันข้อมูลรับผ้า</h2>
+    </div>
+
     <div class="field">
-      <div class="label">ชื่อลูกค้า *</div>
-      <select id="r-name">
-        <option value="">-- เลือกชื่อ --</option>
-        <option value="แอร์">แอร์</option>
-        <option value="ออยล์">ออยล์</option>
-        <option value="เอ๊าะ">เอ๊าะ</option>
-      </select>
+      <div class="label">👤 ชื่อลูกค้า *</div>
+      <select id="r-name"><option value="">— เลือกชื่อ —</option><option>แอร์</option><option>ออยล์</option><option>เอ๊าะ</option></select>
     </div>
     <div class="field">
-      <div class="label">จำนวนชิ้น *</div>
-      <input id="r-qty" type="number" min="1" placeholder="0" oninput="calcAmount('r')">
+      <div class="label">🧺 จำนวนชิ้น *</div>
+      <input id="r-qty" type="number" min="1" placeholder="กรอกจำนวน" inputmode="numeric" oninput="calcAmt('r')">
     </div>
-    <div class="amount-display">
-      <div>
-        <div class="amount-label">💰 จำนวนเงิน (อัตโนมัติ)</div>
-        <div class="text-xs text-slate-400">จำนวนชิ้น × 6.06</div>
-      </div>
-      <div class="amount-value" id="r-amountDisplay">0.00 ฿</div>
+    <div class="amount-box">
+      <div><div class="a-label">💰 จำนวนเงิน (คำนวณอัตโนมัติ)</div><div class="a-sub">ชิ้น × 6.06 บาท</div></div>
+      <div class="a-val" id="r-amtDisp">0.00 ฿</div>
     </div>
     <input type="hidden" id="r-amount" value="0">
     <div class="field">
-      <div class="label">วิธีชำระเงิน *</div>
+      <div class="label">💳 วิธีชำระเงิน *</div>
       <select id="r-payment" onchange="toggleSlip('r')">
         <option value="เงินสด">💵 เงินสด</option>
         <option value="โอนเงิน">🏦 โอนเงิน</option>
       </select>
     </div>
     <div class="field">
-      <div class="label">หมายเหตุ (ไม่บังคับ)</div>
-      <input id="r-note" placeholder="เช่น ผ้าสีขาว ระวังหด">
+      <div class="label">📝 หมายเหตุ</div>
+      <input id="r-note" placeholder="เช่น ผ้าสีขาว ระวังหด (ไม่บังคับ)">
     </div>
     <div class="field">
-      <div class="label">รูปผ้า / ใบรับงาน (ไม่บังคับ)</div>
+      <div class="label">📷 รูปผ้า / ใบรับงาน (ไม่บังคับ)</div>
       <div class="file-box">
-        <input type="file" accept="image/*" id="r-work" onchange="previewFile('r-work','r-workPrev')">
-        <div class="text-slate-400 text-sm">📷 แตะเพื่อเลือกรูป</div>
-        <img id="r-workPrev" class="preview hidden mx-auto">
+        <input type="file" accept="image/*" id="r-work" onchange="prevFile('r-work','r-wPrev')">
+        <div style="color:#94a3b8;font-size:0.85rem">📷 แตะเพื่อเลือกรูป</div>
+        <img id="r-wPrev" class="preview" style="display:none" class="mx-auto">
       </div>
     </div>
-    <div id="r-slipArea" class="field hidden">
-      <div class="label">สลิปโอนเงิน *</div>
+    <div id="r-slipArea" class="field" style="display:none">
+      <div class="label">🧾 สลิปโอนเงิน *</div>
       <div class="file-box">
-        <input type="file" accept="image/*" id="r-slip" onchange="previewFile('r-slip','r-slipPrev')">
-        <div class="text-slate-400 text-sm">🧾 แตะเพื่อแนบสลิป</div>
-        <img id="r-slipPrev" class="preview hidden mx-auto">
+        <input type="file" accept="image/*" id="r-slip" onchange="prevFile('r-slip','r-sPrev')">
+        <div style="color:#94a3b8;font-size:0.85rem">🧾 แตะเพื่อแนบสลิป</div>
+        <img id="r-sPrev" class="preview" style="display:none" class="mx-auto">
       </div>
     </div>
     <button class="btn btn-green" id="r-submitBtn" onclick="submitForm('receive')">💾 &nbsp;บันทึกข้อมูลรับผ้า</button>
-    <div id="r-result" class="hidden text-center py-3 px-4 bg-green-50 border border-green-200 rounded-xl text-green-700 font-semibold text-sm"></div>
+    <div id="r-result" style="display:none" class="result-box result-ok"></div>
     <button class="btn btn-ghost" onclick="show('menu')">← กลับเมนูหลัก</button>
   </div>
 
-  <!-- ===== DELIVER FORM ===== -->
+  <!-- ═══════════════════ DELIVER ═══════════════════ -->
   <div id="sec-deliver" class="section card p-5 space-y-4">
-    <h2 class="font-bold text-lg text-slate-800">📤 ยืนยันข้อมูลส่งผ้า</h2>
+    <div style="display:flex;align-items:center;gap:0.75rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(0,0,0,0.05)">
+      <div style="width:2.2rem;height:2.2rem;background:linear-gradient(135deg,#fed7aa,#fb923c);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;font-size:1.2rem">📤</div>
+      <h2 style="font-size:1.1rem;font-weight:800;color:#1e293b">ยืนยันข้อมูลส่งผ้า</h2>
+    </div>
+
     <div class="field">
-      <div class="label">ชื่อลูกค้า *</div>
-      <select id="d-name">
-        <option value="">-- เลือกชื่อ --</option>
-        <option value="แอร์">แอร์</option>
-        <option value="ออยล์">ออยล์</option>
-        <option value="เอ๊าะ">เอ๊าะ</option>
-      </select>
+      <div class="label">👤 ชื่อลูกค้า *</div>
+      <select id="d-name"><option value="">— เลือกชื่อ —</option><option>แอร์</option><option>ออยล์</option><option>เอ๊าะ</option></select>
     </div>
     <div class="field">
-      <div class="label">จำนวนชิ้น *</div>
-      <input id="d-qty" type="number" min="1" placeholder="0" oninput="calcAmount('d')">
+      <div class="label">🧺 จำนวนชิ้น *</div>
+      <input id="d-qty" type="number" min="1" placeholder="กรอกจำนวน" inputmode="numeric" oninput="calcAmt('d')">
     </div>
-    <div class="amount-display">
-      <div>
-        <div class="amount-label">💰 จำนวนเงิน (อัตโนมัติ)</div>
-        <div class="text-xs text-slate-400">จำนวนชิ้น × 6.06</div>
-      </div>
-      <div class="amount-value" id="d-amountDisplay">0.00 ฿</div>
+    <div class="amount-box">
+      <div><div class="a-label">💰 จำนวนเงิน (คำนวณอัตโนมัติ)</div><div class="a-sub">ชิ้น × 6.06 บาท</div></div>
+      <div class="a-val" id="d-amtDisp">0.00 ฿</div>
     </div>
     <input type="hidden" id="d-amount" value="0">
     <div class="field">
-      <div class="label">วิธีชำระเงิน *</div>
+      <div class="label">💳 วิธีชำระเงิน *</div>
       <select id="d-payment" onchange="toggleSlip('d')">
         <option value="เงินสด">💵 เงินสด</option>
         <option value="โอนเงิน">🏦 โอนเงิน</option>
       </select>
     </div>
     <div class="field">
-      <div class="label">หมายเหตุ (ไม่บังคับ)</div>
-      <input id="d-note" placeholder="เช่น ส่งแล้ว ลูกค้ารับเรียบร้อย">
+      <div class="label">📝 หมายเหตุ</div>
+      <input id="d-note" placeholder="เช่น ส่งแล้ว ลูกค้ารับเรียบร้อย (ไม่บังคับ)">
     </div>
     <div class="field">
-      <div class="label">รูปผ้าที่ส่ง (ไม่บังคับ)</div>
+      <div class="label">📷 รูปผ้าที่ส่ง (ไม่บังคับ)</div>
       <div class="file-box">
-        <input type="file" accept="image/*" id="d-work" onchange="previewFile('d-work','d-workPrev')">
-        <div class="text-slate-400 text-sm">📷 แตะเพื่อเลือกรูป</div>
-        <img id="d-workPrev" class="preview hidden mx-auto">
+        <input type="file" accept="image/*" id="d-work" onchange="prevFile('d-work','d-wPrev')">
+        <div style="color:#94a3b8;font-size:0.85rem">📷 แตะเพื่อเลือกรูป</div>
+        <img id="d-wPrev" class="preview" style="display:none" class="mx-auto">
       </div>
     </div>
-    <div id="d-slipArea" class="field hidden">
-      <div class="label">สลิปโอนเงิน *</div>
+    <div id="d-slipArea" class="field" style="display:none">
+      <div class="label">🧾 สลิปโอนเงิน *</div>
       <div class="file-box">
-        <input type="file" accept="image/*" id="d-slip" onchange="previewFile('d-slip','d-slipPrev')">
-        <div class="text-slate-400 text-sm">🧾 แตะเพื่อแนบสลิป</div>
-        <img id="d-slipPrev" class="preview hidden mx-auto">
+        <input type="file" accept="image/*" id="d-slip" onchange="prevFile('d-slip','d-sPrev')">
+        <div style="color:#94a3b8;font-size:0.85rem">🧾 แตะเพื่อแนบสลิป</div>
+        <img id="d-sPrev" class="preview" style="display:none" class="mx-auto">
       </div>
     </div>
     <button class="btn btn-orange" id="d-submitBtn" onclick="submitForm('deliver')">💾 &nbsp;บันทึกข้อมูลส่งผ้า</button>
-    <div id="d-result" class="hidden text-center py-3 px-4 bg-orange-50 border border-orange-200 rounded-xl text-orange-700 font-semibold text-sm"></div>
+    <div id="d-result" style="display:none" class="result-box result-ok"></div>
     <button class="btn btn-ghost" onclick="show('menu')">← กลับเมนูหลัก</button>
   </div>
 
-  <!-- ===== SEARCH ===== -->
+  <!-- ═══════════════════ SEARCH ═══════════════════ -->
   <div id="sec-search" class="section card p-5 space-y-4">
-    <h2 class="font-bold text-lg text-slate-800">🔍 ตรวจสอบ Order</h2>
-    <div class="field">
-      <div class="label">ชื่อลูกค้า</div>
-      <select id="s-name">
-        <option value="">-- เลือกชื่อ --</option>
-        <option value="แอร์">แอร์</option>
-        <option value="ออยล์">ออยล์</option>
-        <option value="เอ๊าะ">เอ๊าะ</option>
-      </select>
+    <div style="display:flex;align-items:center;gap:0.75rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(0,0,0,0.05)">
+      <div style="width:2.2rem;height:2.2rem;background:linear-gradient(135deg,#bae6fd,#38bdf8);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;font-size:1.2rem">🔍</div>
+      <h2 style="font-size:1.1rem;font-weight:800;color:#1e293b">ตรวจสอบ Order</h2>
     </div>
-    <button class="btn btn-blue" id="searchBtn" onclick="searchOrder()">🔎 &nbsp;ค้นหา</button>
+    <div class="field">
+      <div class="label">👤 ชื่อลูกค้า</div>
+      <select id="s-name"><option value="">— ทุกคน —</option><option>แอร์</option><option>ออยล์</option><option>เอ๊าะ</option></select>
+    </div>
+    <button class="btn btn-blue" id="searchBtn" onclick="doSearch()">🔎 &nbsp;ค้นหา Order</button>
     <div id="orders" class="space-y-2"></div>
     <button class="btn btn-ghost" onclick="show('menu')">← กลับเมนูหลัก</button>
   </div>
 
-  <!-- ===== DASHBOARD ===== -->
+  <!-- ═══════════════════ DASHBOARD ═══════════════════ -->
   <div id="sec-dashboard" class="section space-y-4">
+
     <div class="card p-5 space-y-4">
-      <div class="flex items-center justify-between">
-        <h2 class="font-bold text-lg text-slate-800">📊 Dashboard</h2>
-        <button onclick="loadDashboard()" class="text-sm text-sky-600 font-semibold">🔄 รีเฟรช</button>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:0.6rem">
+          <div style="width:2.2rem;height:2.2rem;background:linear-gradient(135deg,#e9d5ff,#c084fc);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;font-size:1.2rem">📊</div>
+          <h2 style="font-size:1.1rem;font-weight:800;color:#1e293b">Dashboard</h2>
+        </div>
+        <button onclick="loadDashboard()" style="font-size:0.8rem;color:#0ea5e9;font-weight:700;background:rgba(14,165,233,0.08);border:1.5px solid rgba(14,165,233,0.2);border-radius:0.6rem;padding:0.3rem 0.75rem;cursor:pointer;font-family:inherit">🔄 รีเฟรช</button>
       </div>
+
       <div class="tab-bar" id="dashTabs">
-        <button class="tab-btn active" onclick="setDashPeriod('today',this)">วันนี้</button>
-        <button class="tab-btn" onclick="setDashPeriod('week',this)">สัปดาห์</button>
-        <button class="tab-btn" onclick="setDashPeriod('month',this)">เดือนนี้</button>
-        <button class="tab-btn" onclick="setDashPeriod('total',this)">ทั้งหมด</button>
+        <button class="tab-btn active" onclick="setDashP('today',this)">วันนี้</button>
+        <button class="tab-btn" onclick="setDashP('week',this)">สัปดาห์</button>
+        <button class="tab-btn" onclick="setDashP('month',this)">เดือนนี้</button>
+        <button class="tab-btn" onclick="setDashP('total',this)">ทั้งหมด</button>
       </div>
+
       <div class="grid grid-cols-2 gap-3" id="dashStats">
-        <div class="col-span-2 skeleton" style="height:72px;border-radius:1rem;"></div>
-        <div class="skeleton" style="height:72px;border-radius:1rem;"></div>
-        <div class="skeleton" style="height:72px;border-radius:1rem;"></div>
+        <div class="skel col-span-2" style="height:78px"></div>
+        <div class="skel" style="height:78px"></div>
+        <div class="skel" style="height:78px"></div>
       </div>
     </div>
+
     <div class="card p-5 space-y-3">
-      <h3 class="font-bold text-slate-700">👥 แยกตามลูกค้า (เดือนนี้)</h3>
-      <div id="custTable" class="skeleton" style="height:80px;border-radius:0.75rem;"></div>
+      <h3 style="font-weight:800;color:#1e293b;font-size:0.95rem">👥 แยกตามลูกค้า (เดือนนี้)</h3>
+      <div id="custTable"><div class="skel" style="height:80px"></div></div>
     </div>
+
     <div class="card p-5 space-y-3">
-      <h3 class="font-bold text-slate-700">🕐 รายการล่าสุด</h3>
+      <h3 style="font-weight:800;color:#1e293b;font-size:0.95rem">🕐 รายการล่าสุด</h3>
       <div id="recentOrders" class="space-y-2">
-        <div class="skeleton" style="height:60px;border-radius:0.75rem;"></div>
-        <div class="skeleton" style="height:60px;border-radius:0.75rem;"></div>
+        <div class="skel" style="height:60px"></div>
+        <div class="skel" style="height:60px"></div>
+        <div class="skel" style="height:60px"></div>
       </div>
     </div>
-    <button class="btn btn-ghost card" onclick="show('summary')" style="margin-bottom:0;">📅 ดูสรุปรายสัปดาห์/เดือน</button>
-    <button class="btn btn-ghost card" onclick="show('menu')" style="margin-top:0;">← กลับเมนูหลัก</button>
+
+    <button class="btn btn-purple" onclick="show('summary')" style="margin-bottom:0">📅 &nbsp;ดูสรุปรายสัปดาห์ / รายเดือน</button>
+    <button class="btn btn-ghost" onclick="show('menu')" style="margin-top:0">← กลับเมนูหลัก</button>
   </div>
 
-  <!-- ===== SUMMARY ===== -->
+  <!-- ═══════════════════ SUMMARY ═══════════════════ -->
   <div id="sec-summary" class="section space-y-4">
     <div class="card p-5 space-y-4">
-      <div class="flex items-center gap-2">
-        <button onclick="show('dashboard')" class="text-slate-400 text-xl font-bold">←</button>
-        <h2 class="font-bold text-lg text-slate-800">📅 สรุปรายงาน</h2>
+      <div style="display:flex;align-items:center;gap:0.75rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(0,0,0,0.05)">
+        <button onclick="show('dashboard')" style="color:#94a3b8;font-size:1.3rem;background:none;border:none;cursor:pointer;line-height:1">←</button>
+        <h2 style="font-size:1.1rem;font-weight:800;color:#1e293b">📅 สรุปรายงาน</h2>
       </div>
       <div class="tab-bar">
-        <button class="tab-btn active" onclick="setSummaryPeriod('week',this)">รายสัปดาห์</button>
-        <button class="tab-btn" onclick="setSummaryPeriod('month',this)">รายเดือน</button>
+        <button class="tab-btn active" onclick="setSumP('week',this)">รายสัปดาห์</button>
+        <button class="tab-btn" onclick="setSumP('month',this)">รายเดือน</button>
       </div>
       <div class="field">
-        <div class="label">กรองตามลูกค้า (ไม่บังคับ)</div>
-        <select id="sum-name" onchange="loadSummary()">
-          <option value="">-- ทุกคน --</option>
-          <option value="แอร์">แอร์</option>
-          <option value="ออยล์">ออยล์</option>
-          <option value="เอ๊าะ">เอ๊าะ</option>
-        </select>
+        <div class="label">กรองตามลูกค้า</div>
+        <select id="sum-name" onchange="loadSummary()"><option value="">— ทุกคน —</option><option>แอร์</option><option>ออยล์</option><option>เอ๊าะ</option></select>
       </div>
-      <div id="summaryTable">
-        <div class="skeleton" style="height:120px;border-radius:0.75rem;"></div>
-      </div>
+      <div id="summaryTable"><div class="skel" style="height:120px"></div></div>
     </div>
-    <button class="btn btn-ghost card" onclick="show('menu')">← กลับเมนูหลัก</button>
+    <button class="btn btn-ghost" onclick="show('menu')">← กลับเมนูหลัก</button>
   </div>
 
-</div>
+</div><!-- /app -->
 <div id="toast" class="toast"></div>
 
 <script>
+/* ─── CONSTANTS ─── */
 const RATE = 6.06
-let API_URL = ''
-let dashData = null
+const VALID_PREFIX = 'https://script.google.com/macros/s/'
+
+/* ─── STATE ─── */
+let API_URL    = ''
+let dashData   = null
 let dashPeriod = 'today'
 let sumPeriod  = 'week'
 
-/* ===== INIT ===== */
-window.addEventListener('DOMContentLoaded', () => {
-  let saved = ''
-  try { saved = localStorage.getItem('laundry_api_url') || '' } catch(_) {}
+/* ─── STORAGE HELPERS (fail-safe, no crash if blocked) ─── */
+function store_get(k) {
+  try { return localStorage.getItem(k) } catch(_) { return null }
+}
+function store_set(k,v) {
+  try { localStorage.setItem(k,v) } catch(_) {}
+}
 
-  if (saved && saved.startsWith('https://script.google.com/macros/s/') && saved.endsWith('/exec')) {
+/* ─── INIT ─── */
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = store_get('laundry_v3_url')
+  if (saved && saved.startsWith(VALID_PREFIX) && saved.endsWith('/exec')) {
     API_URL = saved
     document.getElementById('setup-url').value = saved
     goTo('menu')
@@ -382,80 +560,82 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 })
 
-/* ===== Setup ===== */
+/* ─── SETUP ─── */
 function saveSetup() {
   const url = (document.getElementById('setup-url').value || '').trim()
-  const errEl = document.getElementById('setup-err')
-  errEl.classList.add('hidden')
+  const err = document.getElementById('setup-err')
+  err.style.display = 'none'
 
   if (!url) {
-    errEl.textContent = '⚠️ กรุณากรอก URL ก่อน'
-    errEl.classList.remove('hidden'); return
+    return showErr(err, '⚠️ กรุณากรอก URL ก่อน')
   }
-  if (!url.startsWith('https://script.google.com/macros/s/')) {
-    errEl.textContent = '❌ URL ไม่ถูกต้อง — ต้องขึ้นต้นด้วย https://script.google.com/macros/s/'
-    errEl.classList.remove('hidden'); return
+  if (!url.startsWith(VALID_PREFIX)) {
+    return showErr(err, '❌ URL ต้องขึ้นต้นด้วย:\nhttps://script.google.com/macros/s/')
   }
   if (!url.endsWith('/exec')) {
-    errEl.textContent = '❌ URL ต้องลงท้ายด้วย /exec'
-    errEl.classList.remove('hidden'); return
+    return showErr(err, '❌ URL ต้องลงท้ายด้วย /exec')
   }
 
   API_URL = url
-  try { localStorage.setItem('laundry_api_url', url) } catch(_) {}
+  store_set('laundry_v3_url', url)
   toast('✅ บันทึก URL สำเร็จ!')
   goTo('menu')
 }
+function showErr(el, msg) {
+  el.textContent = msg; el.style.display = 'block'
+}
 
-/* ===== Navigation ===== */
+/* ─── NAV ─── */
 function goTo(s) {
   document.querySelectorAll('.section').forEach(el => el.classList.remove('active'))
   document.getElementById('sec-' + s).classList.add('active')
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+  window.scrollTo({ top:0, behavior:'smooth' })
 }
 
-function show(section) {
-  const needsApi = ['receive','deliver','search','dashboard','summary']
-  if (needsApi.includes(section) && !API_URL) {
+function show(s) {
+  const needApi = ['receive','deliver','search','dashboard','summary']
+  if (needApi.includes(s) && !API_URL) {
     toast('⚠️ กรุณาตั้งค่า API URL ก่อน')
     goTo('setup'); return
   }
-  goTo(section)
-  if (section === 'dashboard') loadDashboard()
-  if (section === 'summary')   loadSummary()
+  goTo(s)
+  if (s === 'dashboard') loadDashboard()
+  if (s === 'summary')   loadSummary()
 }
 
-/* ===== Toast ===== */
-function toast(msg, duration=3500) {
+/* ─── TOAST ─── */
+let toastTimer
+function toast(msg, ms=3500) {
+  clearTimeout(toastTimer)
   const t = document.getElementById('toast')
   t.textContent = msg; t.classList.add('show')
-  setTimeout(() => t.classList.remove('show'), duration)
+  toastTimer = setTimeout(() => t.classList.remove('show'), ms)
 }
 
-/* ===== Calc ===== */
-function calcAmount(p) {
-  const qty = parseFloat(document.getElementById(p+'-qty').value) || 0
-  const amt = qty * RATE
-  document.getElementById(p+'-amount').value = amt.toFixed(2)
-  document.getElementById(p+'-amountDisplay').textContent = amt > 0 ? amt.toFixed(2)+' ฿' : '0.00 ฿'
+/* ─── CALC ─── */
+function calcAmt(p) {
+  const q = parseFloat(document.getElementById(p+'-qty').value) || 0
+  const a = q * RATE
+  document.getElementById(p+'-amount').value = a.toFixed(2)
+  document.getElementById(p+'-amtDisp').textContent = a > 0 ? a.toFixed(2)+' ฿' : '0.00 ฿'
 }
 
 function toggleSlip(p) {
   const pay = document.getElementById(p+'-payment').value
-  document.getElementById(p+'-slipArea').classList.toggle('hidden', pay !== 'โอนเงิน')
+  document.getElementById(p+'-slipArea').style.display = pay === 'โอนเงิน' ? '' : 'none'
 }
 
-function previewFile(inputId, previewId) {
-  const file = document.getElementById(inputId).files[0]
-  const prev = document.getElementById(previewId)
-  if (file) {
+/* ─── FILE PREVIEW ─── */
+function prevFile(inId, imgId) {
+  const f = document.getElementById(inId).files[0]
+  const img = document.getElementById(imgId)
+  if (f) {
     const r = new FileReader()
-    r.onload = e => { prev.src = e.target.result; prev.classList.remove('hidden') }
-    r.readAsDataURL(file)
-  } else { prev.classList.add('hidden') }
+    r.onload = e => { img.src = e.target.result; img.style.display = 'block' }
+    r.readAsDataURL(f)
+  } else { img.style.display = 'none' }
 }
-
-function fileToBase64(file) {
+function toB64(file) {
   return new Promise((res,rej) => {
     const r = new FileReader()
     r.onload  = () => res(r.result.split(',')[1])
@@ -464,9 +644,9 @@ function fileToBase64(file) {
   })
 }
 
-/* ===== Submit ===== */
+/* ─── SUBMIT ─── */
 async function submitForm(type) {
-  const p = type === 'receive' ? 'r' : 'd'
+  const p       = type === 'receive' ? 'r' : 'd'
   const name    = document.getElementById(p+'-name').value
   const qty     = document.getElementById(p+'-qty').value.trim()
   const amount  = document.getElementById(p+'-amount').value
@@ -474,29 +654,29 @@ async function submitForm(type) {
   const note    = document.getElementById(p+'-note').value.trim()
   const workEl  = document.getElementById(p+'-work')
   const slipEl  = document.getElementById(p+'-slip')
-  const workFile = workEl.files[0]
-  const slipFile = slipEl ? slipEl.files[0] : null
 
-  if (!name)                              { toast('⚠️ กรุณาเลือกชื่อลูกค้า'); return }
-  if (!qty || parseFloat(qty) < 1)        { toast('⚠️ กรุณากรอกจำนวนชิ้น'); return }
-  if (payment === 'โอนเงิน' && !slipFile) { toast('⚠️ กรุณาแนบสลิปโอนเงิน'); return }
+  if (!name)                                                     { toast('⚠️ กรุณาเลือกชื่อลูกค้า'); return }
+  if (!qty || parseFloat(qty) < 1)                               { toast('⚠️ กรุณากรอกจำนวนชิ้น'); return }
+  if (payment === 'โอนเงิน' && slipEl && !slipEl.files[0])      { toast('⚠️ กรุณาแนบสลิปโอนเงิน'); return }
 
   const btn = document.getElementById(p+'-submitBtn')
   const orig = btn.innerHTML
-  btn.innerHTML = '<span class="spinner"></span> กำลังบันทึก...'
+  btn.innerHTML = `<span class="spinner"></span> กำลังบันทึก...`
   btn.disabled = true
 
   try {
     const payload = { type, name, qty, amount, payment, note }
-    if (workFile) {
-      payload.workBase64 = await fileToBase64(workFile)
-      payload.workName   = workFile.name
-      payload.workType   = workFile.type
+    if (workEl?.files[0]) {
+      const wf = workEl.files[0]
+      payload.workBase64 = await toB64(wf)
+      payload.workName   = wf.name
+      payload.workType   = wf.type
     }
-    if (slipFile) {
-      payload.slipBase64 = await fileToBase64(slipFile)
-      payload.slipName   = slipFile.name
-      payload.slipType   = slipFile.type
+    if (slipEl?.files[0]) {
+      const sf = slipEl.files[0]
+      payload.slipBase64 = await toB64(sf)
+      payload.slipName   = sf.name
+      payload.slipType   = sf.type
     }
 
     const res = await fetch(API_URL, {
@@ -505,22 +685,21 @@ async function submitForm(type) {
       body: JSON.stringify(payload)
     })
     let data = {}
-    try { data = await res.json() } catch(_) { data = { orderId: 'รอดำเนินการ' } }
+    try { data = await res.json() } catch(_) { data = { orderId: '—' } }
 
     const el = document.getElementById(p+'-result')
-    el.classList.remove('hidden')
-    el.innerHTML = `✅ บันทึกสำเร็จ! &nbsp; Order ID: <span class="font-bold text-base">${data.orderId ?? '—'}</span>`
+    el.style.display = 'block'
+    el.innerHTML = `✅ บันทึกสำเร็จ! &nbsp; Order: <b>${data.orderId ?? '—'}</b>`
 
-    document.getElementById(p+'-name').value = ''
-    document.getElementById(p+'-qty').value  = ''
-    document.getElementById(p+'-note').value = ''
+    // reset
+    ;[p+'-name',p+'-qty',p+'-note'].forEach(id => document.getElementById(id).value = '')
     document.getElementById(p+'-amount').value = '0'
-    document.getElementById(p+'-amountDisplay').textContent = '0.00 ฿'
+    document.getElementById(p+'-amtDisp').textContent = '0.00 ฿'
     workEl.value = ''
     if (slipEl) slipEl.value = ''
-    ;[p+'-workPrev',p+'-slipPrev'].forEach(id => {
+    ;[p+'-wPrev',p+'-sPrev'].forEach(id => {
       const e = document.getElementById(id)
-      if (e) { e.src=''; e.classList.add('hidden') }
+      if (e) { e.src=''; e.style.display='none' }
     })
     toast('✅ บันทึกข้อมูลสำเร็จ!')
   } catch(err) {
@@ -530,133 +709,147 @@ async function submitForm(type) {
   }
 }
 
-/* ===== Search ===== */
-async function searchOrder() {
+/* ─── SEARCH ─── */
+async function doSearch() {
   const name = document.getElementById('s-name').value
-  if (!name) { toast('⚠️ กรุณาเลือกชื่อลูกค้า'); return }
-
-  const btn = document.getElementById('searchBtn')
-  btn.innerHTML = '<span class="spinner"></span> กำลังค้นหา...'
-  btn.disabled = true
-  document.getElementById('orders').innerHTML = ''
+  const btn  = document.getElementById('searchBtn')
+  const box  = document.getElementById('orders')
+  btn.innerHTML = `<span class="spinner"></span> กำลังค้นหา...`
+  btn.disabled  = true
+  box.innerHTML = ''
 
   try {
-    const res  = await fetch(API_URL + '?name=' + encodeURIComponent(name))
+    const url  = API_URL + (name ? '?name=' + encodeURIComponent(name) : '')
+    const res  = await fetch(url)
     const data = await res.json()
-    const container = document.getElementById('orders')
 
     if (!Array.isArray(data) || data.length === 0) {
-      container.innerHTML = `<div class="text-center py-6 text-slate-400">
-        <div class="text-3xl mb-2">🔎</div><div>ไม่พบ Order ของ <b>${name}</b></div></div>`
+      box.innerHTML = `<div style="text-align:center;padding:2rem;color:#94a3b8">
+        <div style="font-size:2rem">🔎</div>
+        <div style="font-size:0.88rem;margin-top:0.4rem">ไม่พบ Order${name ? ' ของ <b>'+name+'</b>' : ''}</div>
+      </div>`
       return
     }
-    container.innerHTML = data.map(renderOrderCard).join('')
+    box.innerHTML = data.map(renderOrder).join('')
   } catch(err) {
-    document.getElementById('orders').innerHTML =
-      `<div class="text-center py-4 text-red-400 text-sm">❌ ${err.message}</div>`
+    box.innerHTML = `<div style="text-align:center;color:#ef4444;padding:1rem;font-size:0.85rem">❌ ${err.message}</div>`
   } finally {
-    btn.innerHTML = '🔎 &nbsp;ค้นหา'; btn.disabled = false
+    btn.innerHTML = '🔎 &nbsp;ค้นหา Order'; btn.disabled = false
   }
 }
 
-function renderOrderCard(o) {
-  const isDel = o.type === 'deliver'
-  const payBadge = o.payment === 'โอนเงิน' ? 'badge-transfer' : 'badge-cash'
+function renderOrder(o) {
+  const isDel   = o.type === 'deliver'
+  const payBadge = o.payment === 'โอนเงิน' ? 'b-transfer' : 'b-cash'
   const payIcon  = o.payment === 'โอนเงิน' ? '🏦' : '💵'
-  const workLink = o.work ? `<a href="${o.work}" target="_blank" class="text-sky-600 underline text-xs">📷 รูปผ้า</a>` : ''
-  const slipLink = o.slip ? `<a href="${o.slip}" target="_blank" class="text-sky-600 underline text-xs">🧾 สลิป</a>` : ''
-  const dateStr  = o.date ? `<span class="text-slate-400 text-xs">${o.date} ${o.time||''}</span>` : ''
-  const noteStr  = o.note ? `<div class="text-slate-500 text-xs mt-1">📝 ${o.note}</div>` : ''
+  const wLink    = o.work ? `<a href="${o.work}" target="_blank" style="color:#0ea5e9;font-size:0.78rem;text-decoration:none">📷 รูปผ้า</a>` : ''
+  const sLink    = o.slip ? `<a href="${o.slip}" target="_blank" style="color:#0ea5e9;font-size:0.78rem;text-decoration:none">🧾 สลิป</a>` : ''
+  const note     = o.note ? `<div style="font-size:0.78rem;color:#94a3b8;margin-top:4px">📝 ${o.note}</div>` : ''
   return `
     <div class="order-card ${isDel?'deliver':'receive'}">
-      <div class="flex items-center justify-between mb-2">
-        <span class="font-bold text-slate-700"># ${o.orderId||o.id||'—'}</span>${dateStr}
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <span style="font-weight:800;color:#334155;font-size:0.88rem">#${o.orderId||o.id||'—'}</span>
+        <span style="font-size:0.73rem;color:#94a3b8">${o.date||''} ${o.time||''}</span>
       </div>
-      <div class="flex gap-2 mb-2 flex-wrap">
-        <span class="badge ${isDel?'badge-deliver':'badge-receive'}">${isDel?'📤 ส่งผ้า':'📥 รับผ้า'}</span>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px">
+        <span class="badge ${isDel?'b-deliver':'b-receive'}">${isDel?'📤 ส่งผ้า':'📥 รับผ้า'}</span>
         <span class="badge ${payBadge}">${payIcon} ${o.payment}</span>
-        ${o.name?`<span class="badge" style="background:#f1f5f9;color:#475569;">👤 ${o.name}</span>`:''}
+        ${o.name?`<span class="badge b-name">👤 ${o.name}</span>`:''}
       </div>
-      <div class="text-slate-600">🧺 ${o.qty} ชิ้น &nbsp;|&nbsp; 💰 ${Number(o.amount).toLocaleString('th-TH',{minimumFractionDigits:2})} บาท</div>
-      ${noteStr}
-      <div class="flex gap-3 mt-2">${workLink}${slipLink}</div>
+      <div style="font-size:0.88rem;color:#475569;font-weight:600">🧺 ${o.qty} ชิ้น &nbsp;·&nbsp; 💰 ${Number(o.amount).toLocaleString('th-TH',{minimumFractionDigits:2})} บาท</div>
+      ${note}
+      <div style="display:flex;gap:12px;margin-top:6px">${wLink}${sLink}</div>
     </div>`
 }
 
-/* ===== Dashboard ===== */
+/* ─── DASHBOARD ─── */
 async function loadDashboard() {
   if (!API_URL) return
 
   document.getElementById('dashStats').innerHTML = `
-    <div class="col-span-2 skeleton" style="height:72px;border-radius:1rem;"></div>
-    <div class="skeleton" style="height:72px;border-radius:1rem;"></div>
-    <div class="skeleton" style="height:72px;border-radius:1rem;"></div>`
-  document.getElementById('custTable').innerHTML = `<div class="skeleton" style="height:80px;border-radius:.75rem;"></div>`
+    <div class="skel col-span-2" style="height:78px"></div>
+    <div class="skel" style="height:78px"></div>
+    <div class="skel" style="height:78px"></div>`
+  document.getElementById('custTable').innerHTML   = `<div class="skel" style="height:80px"></div>`
   document.getElementById('recentOrders').innerHTML = `
-    <div class="skeleton" style="height:60px;border-radius:.75rem;"></div>
-    <div class="skeleton" style="height:60px;border-radius:.75rem;"></div>`
+    <div class="skel" style="height:60px"></div>
+    <div class="skel" style="height:60px"></div>
+    <div class="skel" style="height:60px"></div>`
 
   try {
     const res = await fetch(API_URL + '?action=dashboard')
-    if (!res.ok) throw new Error('HTTP ' + res.status)
+    if (!res.ok) throw new Error('Server ตอบ HTTP ' + res.status)
     dashData = await res.json()
-    renderDashboard()
+    renderDash()
   } catch(err) {
     document.getElementById('dashStats').innerHTML = `
-      <div class="col-span-2 bg-red-50 border border-red-200 rounded-xl p-4 text-center space-y-2">
-        <div class="text-red-500 font-bold text-base">❌ โหลดข้อมูลไม่ได้</div>
-        <div class="text-xs text-slate-500">${err.message}</div>
-        <div class="text-xs text-slate-400">ตรวจสอบว่า Deploy Apps Script ถูกต้อง<br>และตั้ง <b>Who has access: Anyone</b></div>
-        <button onclick="show('setup')" style="display:inline-block;margin-top:4px;padding:0.4rem 1.2rem;background:#f1f5f9;border:1.5px solid #e2e8f0;border-radius:0.75rem;font-size:0.8rem;font-weight:700;color:#475569;cursor:pointer;">⚙️ แก้ไข API URL</button>
+      <div class="col-span-2" style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:1rem;padding:1.2rem;text-align:center">
+        <div style="font-size:1.5rem">❌</div>
+        <div style="font-weight:800;color:#dc2626;margin-top:4px">โหลดข้อมูลไม่ได้</div>
+        <div style="font-size:0.78rem;color:#ef4444;margin-top:4px">${err.message}</div>
+        <div style="font-size:0.75rem;color:#94a3b8;margin-top:8px;line-height:1.6">
+          ✅ ตรวจสอบว่า Deploy Apps Script แล้ว<br>
+          ✅ ตั้ง <b>Who has access: Anyone</b><br>
+          ✅ URL ลงท้าย <b>/exec</b>
+        </div>
+        <button onclick="show('setup')" style="margin-top:10px;background:#f1f5f9;border:1.5px solid #e2e8f0;border-radius:0.75rem;padding:0.4rem 1.1rem;font-size:0.8rem;font-weight:700;color:#475569;cursor:pointer;font-family:inherit">⚙️ แก้ไข API URL</button>
       </div>`
-    console.error(err)
+    document.getElementById('custTable').innerHTML   = ''
+    document.getElementById('recentOrders').innerHTML = ''
+    console.error('[Dashboard]', err)
   }
 }
 
-function setDashPeriod(p, btn) {
+function setDashP(p, btn) {
   dashPeriod = p
   document.querySelectorAll('#dashTabs .tab-btn').forEach(b => b.classList.remove('active'))
   btn.classList.add('active')
-  if (dashData) renderDashboard()
+  if (dashData) renderDash()
 }
 
-function renderDashboard() {
+function renderDash() {
   if (!dashData) return
   const d = dashData[dashPeriod] || { receive:0, deliver:0, amount:0 }
+
   document.getElementById('dashStats').innerHTML = `
-    <div class="stat-card stat-green">
-      <div class="stat-icon">📥</div>
-      <div><div class="stat-label">รับผ้า (ชิ้น)</div><div class="stat-value">${Number(d.receive).toLocaleString()}</div></div>
-    </div>
-    <div class="stat-card stat-orange">
-      <div class="stat-icon">📤</div>
-      <div><div class="stat-label">ส่งผ้า (ชิ้น)</div><div class="stat-value">${Number(d.deliver).toLocaleString()}</div></div>
-    </div>
-    <div class="stat-card stat-blue col-span-2">
+    <div class="stat-card s-blue col-span-2">
       <div class="stat-icon">💰</div>
-      <div><div class="stat-label">รายรับรวม</div><div class="stat-value">${Number(d.amount).toLocaleString('th-TH',{minimumFractionDigits:2})} บาท</div></div>
+      <div>
+        <div class="stat-label">รายรับรวม</div>
+        <div class="stat-val">${Number(d.amount).toLocaleString('th-TH',{minimumFractionDigits:2})} บาท</div>
+      </div>
+    </div>
+    <div class="stat-card s-green">
+      <div class="stat-icon">📥</div>
+      <div><div class="stat-label">รับผ้า</div><div class="stat-val">${Number(d.receive).toLocaleString()} ชิ้น</div></div>
+    </div>
+    <div class="stat-card s-orange">
+      <div class="stat-icon">📤</div>
+      <div><div class="stat-label">ส่งผ้า</div><div class="stat-val">${Number(d.deliver).toLocaleString()} ชิ้น</div></div>
     </div>`
 
   const cust = dashData.byCustomer || {}
   const keys = Object.keys(cust)
-  document.getElementById('custTable').innerHTML = keys.length === 0
-    ? `<div class="text-center text-slate-400 py-4 text-sm">ยังไม่มีข้อมูลเดือนนี้</div>`
-    : `<table class="summary-table"><thead><tr><th>ลูกค้า</th><th>รับ</th><th>ส่ง</th><th>ยอดรวม</th></tr></thead>
-       <tbody>${keys.map(k=>`<tr>
-         <td class="font-semibold">${k}</td>
-         <td>${Number(cust[k].receive).toLocaleString()}</td>
-         <td>${Number(cust[k].deliver).toLocaleString()}</td>
-         <td class="font-bold text-green-700">${Number(cust[k].amount).toLocaleString('th-TH',{minimumFractionDigits:2})}</td>
-       </tr>`).join('')}</tbody></table>`
+  document.getElementById('custTable').innerHTML = !keys.length
+    ? `<div style="text-align:center;color:#94a3b8;padding:1.5rem;font-size:0.85rem">ยังไม่มีข้อมูลเดือนนี้</div>`
+    : `<div style="overflow-x:auto"><table class="tbl">
+        <thead><tr><th>ลูกค้า</th><th>รับ</th><th>ส่ง</th><th>ยอดรวม (บาท)</th></tr></thead>
+        <tbody>${keys.map(k=>`<tr>
+          <td style="font-weight:700">👤 ${k}</td>
+          <td>${Number(cust[k].receive).toLocaleString()}</td>
+          <td>${Number(cust[k].deliver).toLocaleString()}</td>
+          <td style="font-weight:800;color:#15803d">${Number(cust[k].amount).toLocaleString('th-TH',{minimumFractionDigits:2})}</td>
+        </tr>`).join('')}</tbody>
+      </table></div>`
 
   const recent = dashData.recent || []
-  document.getElementById('recentOrders').innerHTML = recent.length === 0
-    ? `<div class="text-center text-slate-400 text-sm py-4">ยังไม่มีรายการ</div>`
-    : recent.map(renderOrderCard).join('')
+  document.getElementById('recentOrders').innerHTML = !recent.length
+    ? `<div style="text-align:center;color:#94a3b8;font-size:0.85rem;padding:1rem">ยังไม่มีรายการ</div>`
+    : recent.map(renderOrder).join('')
 }
 
-/* ===== Summary ===== */
-function setSummaryPeriod(p, btn) {
+/* ─── SUMMARY ─── */
+function setSumP(p, btn) {
   sumPeriod = p
   document.querySelectorAll('#sec-summary .tab-btn').forEach(b => b.classList.remove('active'))
   btn.classList.add('active')
@@ -666,33 +859,33 @@ function setSummaryPeriod(p, btn) {
 async function loadSummary() {
   if (!API_URL) return
   const name = document.getElementById('sum-name')?.value || ''
-  document.getElementById('summaryTable').innerHTML = `<div class="skeleton" style="height:120px;border-radius:.75rem;"></div>`
+  document.getElementById('summaryTable').innerHTML = `<div class="skel" style="height:120px"></div>`
 
   try {
     const res  = await fetch(`${API_URL}?action=summary&period=${sumPeriod}&name=${encodeURIComponent(name)}`)
     if (!res.ok) throw new Error('HTTP ' + res.status)
     const rows = await res.json()
 
-    if (!Array.isArray(rows) || rows.length === 0) {
-      document.getElementById('summaryTable').innerHTML = `<div class="text-center text-slate-400 text-sm py-6">ไม่มีข้อมูล</div>`
+    if (!Array.isArray(rows) || !rows.length) {
+      document.getElementById('summaryTable').innerHTML = `<div style="text-align:center;color:#94a3b8;padding:2rem;font-size:0.85rem">ไม่มีข้อมูล</div>`
       return
     }
-    const pLabel = sumPeriod === 'week' ? 'สัปดาห์ (จันทร์)' : 'เดือน'
+    const pLabel = sumPeriod === 'week' ? 'สัปดาห์ (เริ่มจันทร์)' : 'เดือน'
     document.getElementById('summaryTable').innerHTML = `
-      <div class="overflow-x-auto">
-        <table class="summary-table">
+      <div style="overflow-x:auto">
+        <table class="tbl">
           <thead><tr><th>${pLabel}</th><th>รับ</th><th>ส่ง</th><th>ออเดอร์</th><th>ยอด (บาท)</th></tr></thead>
           <tbody>${rows.map(r=>`<tr>
-            <td class="font-semibold text-xs">${r.label}</td>
+            <td style="font-weight:700;font-size:0.8rem">${r.label}</td>
             <td>${Number(r.receive).toLocaleString()}</td>
             <td>${Number(r.deliver).toLocaleString()}</td>
             <td>${r.count}</td>
-            <td class="font-bold text-green-700">${Number(r.amount).toLocaleString('th-TH',{minimumFractionDigits:2})}</td>
+            <td style="font-weight:800;color:#15803d">${Number(r.amount).toLocaleString('th-TH',{minimumFractionDigits:2})}</td>
           </tr>`).join('')}</tbody>
         </table>
       </div>`
   } catch(err) {
-    document.getElementById('summaryTable').innerHTML = `<div class="text-center text-red-400 text-sm py-4">❌ ${err.message}</div>`
+    document.getElementById('summaryTable').innerHTML = `<div style="text-align:center;color:#ef4444;font-size:0.85rem;padding:1rem">❌ ${err.message}</div>`
   }
 }
 </script>
