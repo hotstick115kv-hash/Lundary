@@ -3,125 +3,377 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Check List</title>
-https://cdn.tailwindcss.com
+<title>Check List – รับ‑ส่งผ้า</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { font-family: 'Sarabun', sans-serif; }
+
+  body {
+    background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 100%);
+    min-height: 100vh;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 1.25rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #06b6d4, #0ea5e9);
+    color: white;
+    border-radius: 0.875rem;
+    padding: 0.85rem 1.25rem;
+    font-weight: 700;
+    font-size: 1.05rem;
+    width: 100%;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 14px rgba(6,182,212,0.35);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(6,182,212,0.45); }
+  .btn-primary:active { transform: translateY(0px); }
+
+  .btn-green {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    border-radius: 0.875rem;
+    padding: 0.85rem 1.25rem;
+    font-weight: 700;
+    font-size: 1.05rem;
+    width: 100%;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 14px rgba(34,197,94,0.35);
+  }
+  .btn-green:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(34,197,94,0.45); }
+  .btn-green:active { transform: translateY(0px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: #64748b;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.875rem;
+    padding: 0.65rem 1rem;
+    width: 100%;
+    font-size: 0.9rem;
+    transition: all 0.15s ease;
+  }
+  .btn-ghost:hover { background: #f1f5f9; color: #334155; }
+
+  input, select {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    background: white;
+  }
+  input:focus, select:focus { border-color: #06b6d4; box-shadow: 0 0 0 3px rgba(6,182,212,0.15); }
+
+  .label { font-size: 0.82rem; font-weight: 600; color: #64748b; margin-bottom: 0.25rem; }
+
+  .field { display: flex; flex-direction: column; gap: 0.25rem; }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .order-card {
+    background: white;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 0.875rem;
+    padding: 0.9rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+  }
+  .badge-cash { background: #dcfce7; color: #16a34a; }
+  .badge-transfer { background: #dbeafe; color: #1d4ed8; }
+
+  .status-ok { color: #16a34a; font-weight: 700; }
+
+  .spinner {
+    display: inline-block;
+    width: 18px; height: 18px;
+    border: 2.5px solid rgba(255,255,255,0.4);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .toast {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #1e293b;
+    color: white;
+    padding: 0.7rem 1.4rem;
+    border-radius: 999px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    z-index: 999;
+    transition: transform 0.35s cubic-bezier(.34,1.56,.64,1);
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+</style>
 </head>
+<body>
 
-<body class="bg-gray-100 min-h-screen font-sans">
+<div class="max-w-md mx-auto px-4 py-8 space-y-5">
 
-<div class="max-w-md mx-auto p-4 space-y-4">
-
-<!-- Header -->
-<div class="text-center">
-  <h1 class="text-2xl font-bold">🧺 Check List</h1>
-  <p class="text-sm text-gray-500">ตรวจสอบรับ‑ส่งผ้า & การชำระเงิน</p>
-</div>
-
-<!-- Menu -->
-<div id="menu" class="space-y-3">
-  <button onclick="showForm()" class="w-full bg-green-500 text-white py-3 rounded-xl text-lg">✅ ยืนยันข้อมูลรับผ้า</button>
-  <button onclick="showSearch()" class="w-full bg-blue-500 text-white py-3 rounded-xl text-lg">🔍 ตรวจสอบ Order</button>
-</div>
-
-<!-- Form -->
-<div id="form" class="hidden bg-white p-4 rounded-xl shadow space-y-3">
-  <h2 class="font-bold text-lg">ยืนยันข้อมูลรับผ้า</h2>
-
-  <input id="name" placeholder="ชื่อลูกค้า" class="w-full p-2 border rounded">
-  <input id="phone" placeholder="เบอร์โทร" class="w-full p-2 border rounded">
-  <input id="qty" type="number" placeholder="จำนวนชิ้น" class="w-full p-2 border rounded">
-  <input id="amount" type="number" placeholder="จำนวนเงิน" class="w-full p-2 border rounded">
-
-  <select id="payment" class="w-full p-2 border rounded" onchange="toggleSlip()">
-    <option value="เงินสด">เงินสด</option>
-    <option value="โอนเงิน">โอนเงิน</option>
-  </select>
-
-  <label class="text-sm">รูปผ้า / ใบรับงาน (แนบหรือไม่แนบก็ได้)</label>
-  <input id="workImage" type="file" accept="image/*">
-
-  <div id="slipArea" class="hidden">
-    <label class="text-sm">สลิปโอนเงิน *</label>
-    <input id="slipImage" type="file" accept="image/*">
+  <!-- Header -->
+  <div class="text-center space-y-1">
+    <div class="text-4xl">🧺</div>
+    <h1 class="text-2xl font-bold text-slate-800">Check List</h1>
+    <p class="text-sm text-slate-500">ตรวจสอบรับ‑ส่งผ้า &amp; การชำระเงิน</p>
   </div>
 
-  <button onclick="submitOrder()" class="w-full bg-indigo-500 text-white py-3 rounded-xl">
-    บันทึกข้อมูล
-  </button>
+  <!-- ===== MENU ===== -->
+  <div id="sec-menu" class="section active card p-5 space-y-3">
+    <button class="btn-green" onclick="show('form')">
+      ✅ &nbsp;ยืนยันข้อมูลรับผ้า
+    </button>
+    <button class="btn-primary" onclick="show('search')">
+      🔍 &nbsp;ตรวจสอบ Order
+    </button>
+  </div>
 
-  <p id="result" class="text-center font-bold"></p>
-  <button onclick="back()" class="w-full text-sm text-gray-500">← กลับ</button>
+  <!-- ===== FORM ===== -->
+  <div id="sec-form" class="section card p-5 space-y-4">
+    <h2 class="font-bold text-lg text-slate-800">📥 ยืนยันข้อมูลรับผ้า</h2>
+
+    <div class="field">
+      <div class="label">ชื่อลูกค้า *</div>
+      <input id="f-name" placeholder="เช่น สมชาย ใจดี">
+    </div>
+
+    <div class="field">
+      <div class="label">เบอร์โทรศัพท์ *</div>
+      <input id="f-phone" type="tel" placeholder="0812345678" maxlength="10">
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+      <div class="field">
+        <div class="label">จำนวนชิ้น *</div>
+        <input id="f-qty" type="number" min="1" placeholder="0">
+      </div>
+      <div class="field">
+        <div class="label">จำนวนเงิน (บาท) *</div>
+        <input id="f-amount" type="number" min="0" placeholder="0">
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="label">วิธีชำระเงิน *</div>
+      <select id="f-payment" onchange="toggleSlip()">
+        <option value="เงินสด">💵 &nbsp;เงินสด</option>
+        <option value="โอนเงิน">🏦 &nbsp;โอนเงิน</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <div class="label">รูปผ้า / ใบรับงาน (ไม่บังคับ)</div>
+      <input id="f-workImage" type="file" accept="image/*" style="padding:0.4rem;">
+    </div>
+
+    <div id="slipArea" class="field hidden">
+      <div class="label">สลิปโอนเงิน *</div>
+      <input id="f-slipImage" type="file" accept="image/*" style="padding:0.4rem;">
+    </div>
+
+    <button class="btn-green" id="submitBtn" onclick="submitOrder()">
+      💾 &nbsp;บันทึกข้อมูล
+    </button>
+
+    <div id="form-result" class="hidden text-center py-3 px-4 bg-green-50 border border-green-200 rounded-xl text-green-700 font-semibold text-sm"></div>
+
+    <button class="btn-ghost" onclick="show('menu')">← กลับเมนูหลัก</button>
+  </div>
+
+  <!-- ===== SEARCH ===== -->
+  <div id="sec-search" class="section card p-5 space-y-4">
+    <h2 class="font-bold text-lg text-slate-800">🔍 ตรวจสอบ Order</h2>
+
+    <div class="field">
+      <div class="label">เบอร์โทรศัพท์</div>
+      <input id="s-phone" type="tel" placeholder="0812345678" maxlength="10"
+        onkeydown="if(event.key==='Enter') searchOrder()">
+    </div>
+
+    <button class="btn-primary" id="searchBtn" onclick="searchOrder()">
+      🔎 &nbsp;ค้นหา
+    </button>
+
+    <div id="orders" class="space-y-2"></div>
+
+    <button class="btn-ghost" onclick="show('menu')">← กลับเมนูหลัก</button>
+  </div>
+
 </div>
 
-<!-- Search -->
-<div id="search" class="hidden bg-white p-4 rounded-xl shadow space-y-3">
-  <h2 class="font-bold text-lg">ตรวจสอบ Order</h2>
-
-  <input id="searchPhone" placeholder="กรอกเบอร์โทร" class="w-full p-2 border rounded">
-  <button onclick="searchOrder()" class="w-full bg-blue-500 text-white py-3 rounded-xl">ค้นหา</button>
-
-  <div id="orders" class="space-y-2 text-sm"></div>
-  <button onclick="back()" class="w-full text-sm text-gray-500">← กลับ</button>
-</div>
-
-</div>
+<!-- Toast -->
+<div id="toast" class="toast"></div>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbyf19zeCtZMnZQ2ao53wjZotbOyzGFgyF33cfKa2xmyC2Y6SjECDXgJEt_f6LAMxpCA/exec"
 
-function showForm(){
-  menu.classList.add("hidden")
-  form.classList.remove("hidden")
+/* ---- navigation ---- */
+function show(section) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'))
+  document.getElementById('sec-' + section).classList.add('active')
+  // reset results when going back
+  if (section === 'menu') {
+    document.getElementById('form-result').classList.add('hidden')
+    document.getElementById('orders').innerHTML = ''
+  }
 }
 
-function showSearch(){
-  menu.classList.add("hidden")
-  search.classList.remove("hidden")
+/* ---- slip area toggle ---- */
+function toggleSlip() {
+  const pay = document.getElementById('f-payment').value
+  document.getElementById('slipArea').classList.toggle('hidden', pay !== 'โอนเงิน')
 }
 
-function back(){
-  form.classList.add("hidden")
-  search.classList.add("hidden")
-  menu.classList.remove("hidden")
+/* ---- toast ---- */
+function toast(msg, duration = 3000) {
+  const t = document.getElementById('toast')
+  t.textContent = msg
+  t.classList.add('show')
+  setTimeout(() => t.classList.remove('show'), duration)
 }
 
-function toggleSlip(){
-  slipArea.classList.toggle("hidden", payment.value !== "โอนเงิน")
-}
+/* ---- submit order ---- */
+async function submitOrder() {
+  const name    = document.getElementById('f-name').value.trim()
+  const phone   = document.getElementById('f-phone').value.trim()
+  const qty     = document.getElementById('f-qty').value.trim()
+  const amount  = document.getElementById('f-amount').value.trim()
+  const payment = document.getElementById('f-payment').value
+  const workImg = document.getElementById('f-workImage')
+  const slipImg = document.getElementById('f-slipImage')
 
-async function submitOrder(){
-  if(payment.value==="โอนเงิน" && !slipImage.files[0]){
-    alert("กรุณาแนบสลิปโอนเงิน")
+  // validation
+  if (!name || !phone || !qty || !amount) {
+    toast('⚠️ กรุณากรอกข้อมูลให้ครบถ้วน')
+    return
+  }
+  if (phone.length < 9) {
+    toast('⚠️ เบอร์โทรไม่ถูกต้อง')
+    return
+  }
+  if (payment === 'โอนเงิน' && !slipImg.files[0]) {
+    toast('⚠️ กรุณาแนบสลิปโอนเงิน')
     return
   }
 
-  const fd = new FormData()
-  fd.append("name", name.value)
-  fd.append("phone", phone.value)
-  fd.append("qty", qty.value)
-  fd.append("amount", amount.value)
-  fd.append("payment", payment.value)
-  if(workImage.files[0]) fd.append("work", workImage.files[0])
-  if(slipImage.files[0]) fd.append("slip", slipImage.files[0])
+  const btn = document.getElementById('submitBtn')
+  btn.innerHTML = '<span class="spinner"></span> กำลังบันทึก...'
+  btn.disabled = true
 
-  const res = await fetch(API_URL,{method:"POST",body:fd})
-  const data = await res.json()
+  try {
+    const fd = new FormData()
+    fd.append('name', name)
+    fd.append('phone', phone)
+    fd.append('qty', qty)
+    fd.append('amount', amount)
+    fd.append('payment', payment)
+    if (workImg.files[0]) fd.append('work', workImg.files[0])
+    if (slipImg.files[0]) fd.append('slip', slipImg.files[0])
 
-  result.innerHTML = "✅ บันทึกสำเร็จ<br>Order: " + data.orderId
+    const res  = await fetch(API_URL, { method: 'POST', body: fd })
+    const data = await res.json()
+
+    const resultEl = document.getElementById('form-result')
+    resultEl.classList.remove('hidden')
+    resultEl.innerHTML = `✅ บันทึกสำเร็จ!<br>Order ID: <span class="font-bold text-base">${data.orderId}</span>`
+
+    // clear form
+    ;['f-name','f-phone','f-qty','f-amount'].forEach(id => document.getElementById(id).value = '')
+    workImg.value = ''
+    slipImg.value = ''
+
+    toast('✅ บันทึกข้อมูลสำเร็จ')
+  } catch (err) {
+    toast('❌ เกิดข้อผิดพลาด โปรดลองใหม่')
+    console.error(err)
+  } finally {
+    btn.innerHTML = '💾 &nbsp;บันทึกข้อมูล'
+    btn.disabled = false
+  }
 }
 
-async function searchOrder(){
-  const res = await fetch(API_URL + "?phone=" + searchPhone.value)
-  const data = await res.json()
+/* ---- search order ---- */
+async function searchOrder() {
+  const phone = document.getElementById('s-phone').value.trim()
+  if (!phone) { toast('⚠️ กรุณากรอกเบอร์โทร'); return }
 
-  orders.innerHTML = data.map(o=>`
-    <div class="border p-2 rounded">
-      <b>${o.id}</b><br>
-      ${o.qty} ชิ้น | ${o.amount} บาท | ${o.payment}<br>
-      <a href="${o.work}" target="_.slip ? ` | <a href="${o.slip}" target="_</div>
-  `).join("")
+  const btn = document.getElementById('searchBtn')
+  btn.innerHTML = '<span class="spinner"></span> กำลังค้นหา...'
+  btn.disabled = true
+  document.getElementById('orders').innerHTML = ''
+
+  try {
+    const res  = await fetch(API_URL + '?phone=' + encodeURIComponent(phone))
+    const data = await res.json()
+
+    const container = document.getElementById('orders')
+
+    if (!Array.isArray(data) || data.length === 0) {
+      container.innerHTML = `
+        <div class="text-center py-6 text-slate-400">
+          <div class="text-3xl mb-2">🔎</div>
+          <div>ไม่พบ Order สำหรับเบอร์นี้</div>
+        </div>`
+      return
+    }
+
+    container.innerHTML = data.map(o => {
+      const badgeClass  = o.payment === 'โอนเงิน' ? 'badge-transfer' : 'badge-cash'
+      const payIcon     = o.payment === 'โอนเงิน' ? '🏦' : '💵'
+      const workLink    = o.work  ? `<a href="${o.work}"  target="_blank" class="text-sky-600 underline text-xs">📷 รูปผ้า</a>` : ''
+      const slipLink    = o.slip  ? `<a href="${o.slip}"  target="_blank" class="text-sky-600 underline text-xs">🧾 สลิป</a>` : ''
+      const dateStr     = o.date  ? `<span class="text-slate-400 text-xs">${o.date}</span>` : ''
+
+      return `
+        <div class="order-card">
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-bold text-slate-700"># ${o.id}</span>
+            ${dateStr}
+          </div>
+          <div class="text-slate-600">
+            🧺 ${o.qty} ชิ้น &nbsp;|&nbsp; 💰 ${Number(o.amount).toLocaleString()} บาท
+          </div>
+          <div class="flex items-center gap-2 mt-2">
+            <span class="badge ${badgeClass}">${payIcon} ${o.payment}</span>
+            ${workLink}
+            ${slipLink}
+          </div>
+        </div>`
+    }).join('')
+
+  } catch (err) {
+    document.getElementById('orders').innerHTML = `
+      <div class="text-center py-4 text-red-400">❌ เกิดข้อผิดพลาด โปรดลองใหม่</div>`
+    console.error(err)
+  } finally {
+    btn.innerHTML = '🔎 &nbsp;ค้นหา'
+    btn.disabled = false
+  }
 }
 </script>
-
 </body>
 </html>
