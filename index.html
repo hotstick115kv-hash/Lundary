@@ -3,212 +3,124 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laundry Management System</title>
-
+<title>Check List</title>
 https://cdn.tailwindcss.com
-https://cdn.jsdelivr.net/npm/chart.js>
-
-<script>
-tailwind.config = {
-  darkMode: 'class'
-}
-</script>
 </head>
 
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-gray-100 transition-all">
+<body class="bg-gray-100 min-h-screen font-sans">
 
-<div class="max-w-6xl mx-auto px-4 py-6 space-y-6">
+<div class="max-w-md mx-auto p-4 space-y-4">
 
 <!-- Header -->
-<div class="flex justify-between items-center">
-  <h1 class="text-2xl font-bold">🧺 ระบบบริหารจัดการซัก‑อบ‑รีด</h1>
-  <button onclick="toggleDarkMode()" class="px-4 py-2 rounded-xl bg-indigo-500 text-white shadow hover:scale-105 transition">
-    🌗 Dark Mode
-  </button>
+<div class="text-center">
+  <h1 class="text-2xl font-bold">🧺 Check List</h1>
+  <p class="text-sm text-gray-500">ตรวจสอบรับ‑ส่งผ้า & การชำระเงิน</p>
 </div>
 
-<!-- Dashboard -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-  <div class="bg-white dark:bg-gray-700 rounded-2xl shadow p-4">
-    <p class="text-sm">รายรับรวม</p>
-    <p id="totalIncome" class="text-2xl font-bold text-green-500">0</p>
-  </div>
-  <div class="bg-white dark:bg-gray-700 rounded-2xl shadow p-4">
-    <p class="text-sm">รายจ่ายรวม</p>
-    <p id="totalExpense" class="text-2xl font-bold text-red-500">0</p>
-  </div>
-  <div class="bg-white dark:bg-gray-700 rounded-2xl shadow p-4">
-    <p class="text-sm">เงินคงเหลือ</p>
-    <p id="balance" class="text-2xl font-bold text-indigo-500">0</p>
-  </div>
-</div>
-
-<!-- Budget -->
-<div class="bg-white dark:bg-gray-700 rounded-2xl shadow p-4 space-y-2">
-  <h2 class="font-bold">💰 ระบบงบประมาณรายเดือน</h2>
-  <div class="flex gap-2">
-    <input id="budgetInput" type="number" placeholder="ตั้งงบประมาณ" class="flex-1 px-3 py-2 rounded-xl border dark:bg-gray-600">
-    <button onclick="saveBudget()" class="px-4 py-2 bg-green-500 text-white rounded-xl shadow">บันทึก</button>
-  </div>
-  <p id="budgetStatus" class="font-bold"></p>
+<!-- Menu -->
+<div id="menu" class="space-y-3">
+  <button onclick="showForm()" class="w-full bg-green-500 text-white py-3 rounded-xl text-lg">✅ ยืนยันข้อมูลรับผ้า</button>
+  <button onclick="showSearch()" class="w-full bg-blue-500 text-white py-3 rounded-xl text-lg">🔍 ตรวจสอบ Order</button>
 </div>
 
 <!-- Form -->
-<div class="bg-white dark:bg-gray-700 rounded-2xl shadow p-4 space-y-3">
-<h2 class="font-bold">➕ เพิ่มรายการ</h2>
-<div class="grid grid-cols-1 md:grid-cols-5 gap-2">
-  <input id="date" type="date" class="px-3 py-2 rounded-xl border dark:bg-gray-600">
-  <input id="desc" type="text" placeholder="รายละเอียด" class="px-3 py-2 rounded-xl border dark:bg-gray-600">
-  <input id="amount" type="number" placeholder="จำนวนเงิน" class="px-3 py-2 rounded-xl border dark:bg-gray-600">
-  <select id="type" class="px-3 py-2 rounded-xl border dark:bg-gray-600">
-    <option value="income">รายรับ</option>
-    <option value="expense">รายจ่าย</option>
+<div id="form" class="hidden bg-white p-4 rounded-xl shadow space-y-3">
+  <h2 class="font-bold text-lg">ยืนยันข้อมูลรับผ้า</h2>
+
+  <input id="name" placeholder="ชื่อลูกค้า" class="w-full p-2 border rounded">
+  <input id="phone" placeholder="เบอร์โทร" class="w-full p-2 border rounded">
+  <input id="qty" type="number" placeholder="จำนวนชิ้น" class="w-full p-2 border rounded">
+  <input id="amount" type="number" placeholder="จำนวนเงิน" class="w-full p-2 border rounded">
+
+  <select id="payment" class="w-full p-2 border rounded" onchange="toggleSlip()">
+    <option value="เงินสด">เงินสด</option>
+    <option value="โอนเงิน">โอนเงิน</option>
   </select>
-  <select id="category" class="px-3 py-2 rounded-xl border dark:bg-gray-600">
-    <option>ซัก</option>
-    <option>อบ</option>
-    <option>รีด</option>
-    <option>ค่าไฟ</option>
-    <option>ค่าเช่า</option>
-    <option>อื่นๆ</option>
-  </select>
-</div>
-<button onclick="addItem()" class="mt-3 w-full py-3 bg-indigo-500 text-white rounded-2xl shadow hover:scale-105 transition">
-บันทึกข้อมูล
-</button>
+
+  <label class="text-sm">รูปผ้า / ใบรับงาน (แนบหรือไม่แนบก็ได้)</label>
+  <input id="workImage" type="file" accept="image/*">
+
+  <div id="slipArea" class="hidden">
+    <label class="text-sm">สลิปโอนเงิน *</label>
+    <input id="slipImage" type="file" accept="image/*">
+  </div>
+
+  <button onclick="submitOrder()" class="w-full bg-indigo-500 text-white py-3 rounded-xl">
+    บันทึกข้อมูล
+  </button>
+
+  <p id="result" class="text-center font-bold"></p>
+  <button onclick="back()" class="w-full text-sm text-gray-500">← กลับ</button>
 </div>
 
-<!-- Table -->
-<div class="bg-white dark:bg-gray-700 rounded-2xl shadow p-4 overflow-x-auto">
-<table class="min-w-full text-sm">
-<thead>
-<tr class="border-b">
-<th>วันที่</th><th>รายละเอียด</th><th>จำนวนเงิน</th><th>ประเภท</th><th>หมวด</th><th></th>
-</tr>
-</thead>
-<tbody id="table"></tbody>
-</table>
-</div>
+<!-- Search -->
+<div id="search" class="hidden bg-white p-4 rounded-xl shadow space-y-3">
+  <h2 class="font-bold text-lg">ตรวจสอบ Order</h2>
 
-<!-- Charts -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-  <canvas id="barChart"></canvas>
-  <canvas id="pieChart"></canvas>
+  <input id="searchPhone" placeholder="กรอกเบอร์โทร" class="w-full p-2 border rounded">
+  <button onclick="searchOrder()" class="w-full bg-blue-500 text-white py-3 rounded-xl">ค้นหา</button>
+
+  <div id="orders" class="space-y-2 text-sm"></div>
+  <button onclick="back()" class="w-full text-sm text-gray-500">← กลับ</button>
 </div>
 
 </div>
 
 <script>
-let data = JSON.parse(localStorage.getItem("laundryData")) || []
-let budget = localStorage.getItem("budget") || 0
-document.getElementById("budgetInput").value = budget
+const API_URL = "https://script.google.com/macros/s/AKfycbyf19zeCtZMnZQ2ao53wjZotbOyzGFgyF33cfKa2xmyC2Y6SjECDXgJEt_f6LAMxpCA/exec"
 
-const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbyf19zeCtZMnZQ2ao53wjZotbOyzGFgyF33cfKa2xmyC2Y6SjECDXgJEt_f6LAMxpCA/exec"
-
-function addItem(){
-  const item = {
-    date: date.value,
-    desc: desc.value,
-    amount: Number(amount.value),
-    type: type.value,
-    category: category.value
-  }
-  data.push(item)
-  saveToSheet(item)
-  persist()
+function showForm(){
+  menu.classList.add("hidden")
+  form.classList.remove("hidden")
 }
 
-function removeItem(index){
-  data.splice(index,1)
-  persist()
+function showSearch(){
+  menu.classList.add("hidden")
+  search.classList.remove("hidden")
 }
 
-function persist(){
-  localStorage.setItem("laundryData",JSON.stringify(data))
-  render()
+function back(){
+  form.classList.add("hidden")
+  search.classList.add("hidden")
+  menu.classList.remove("hidden")
 }
 
-function render(){
-  table.innerHTML=""
-  let income=0,expense=0,monthExpense=0
-  const currentMonth=new Date().getMonth()
+function toggleSlip(){
+  slipArea.classList.toggle("hidden", payment.value !== "โอนเงิน")
+}
 
-  data.forEach((i,idx)=>{
-    if(i.type==="income") income+=i.amount
-    else{
-      expense+=i.amount
-      if(new Date(i.date).getMonth()===currentMonth) monthExpense+=i.amount
-    }
-    table.innerHTML+=`
-<tr class="border-b hover:bg-indigo-50 dark:hover:bg-gray-600">
-<td>${i.date}</td>
-<td>${i.desc}</td>
-<td>${i.amount}</td>
-<td>${i.type}</td>
-<td>${i.category}</td>
-<td><button onclick="removeItem(${idx})" class="text-red-500">ลบ</button></td>
-</tr>`
-  })
-
-  totalIncome.innerText=income
-  totalExpense.innerText=expense
-  balance.innerText=income-expense
-
-  if(monthExpense>budget){
-    budgetStatus.innerHTML="⚠️ เกินงบประมาณ"
-    budgetStatus.className="text-red-500"
-    alert("ใช้เงินเกินงบประมาณ!")
-  }else{
-    budgetStatus.innerHTML="✅ ยังไม่เกินงบ"
-    budgetStatus.className="text-green-500"
+async function submitOrder(){
+  if(payment.value==="โอนเงิน" && !slipImage.files[0]){
+    alert("กรุณาแนบสลิปโอนเงิน")
+    return
   }
 
-  renderCharts()
+  const fd = new FormData()
+  fd.append("name", name.value)
+  fd.append("phone", phone.value)
+  fd.append("qty", qty.value)
+  fd.append("amount", amount.value)
+  fd.append("payment", payment.value)
+  if(workImage.files[0]) fd.append("work", workImage.files[0])
+  if(slipImage.files[0]) fd.append("slip", slipImage.files[0])
+
+  const res = await fetch(API_URL,{method:"POST",body:fd})
+  const data = await res.json()
+
+  result.innerHTML = "✅ บันทึกสำเร็จ<br>Order: " + data.orderId
 }
 
-let barChart,pieChart
-function renderCharts(){
-  if(barChart) barChart.destroy()
-  if(pieChart) pieChart.destroy()
+async function searchOrder(){
+  const res = await fetch(API_URL + "?phone=" + searchPhone.value)
+  const data = await res.json()
 
-  const incomeSum=data.filter(i=>i.type=="income").reduce((a,b)=>a+b.amount,0)
-  const expenseSum=data.filter(i=>i.type=="expense").reduce((a,b)=>a+b.amount,0)
-
-  barChart=new Chart(document.getElementById("barChart"),{
-    type:"bar",
-    data:{labels:["รายรับ","รายจ่าย"],datasets:[{data:[incomeSum,expenseSum],backgroundColor:["#22c55e","#ef4444"]}]}
-  })
-
-  const categories={}
-  data.filter(i=>i.type=="expense").forEach(i=>{
-    categories[i.category]=(categories[i.category]||0)+i.amount
-  })
-
-  pieChart=new Chart(document.getElementById("pieChart"),{
-    type:"pie",
-    data:{labels:Object.keys(categories),datasets:[{data:Object.values(categories)}]}
-  })
+  orders.innerHTML = data.map(o=>`
+    <div class="border p-2 rounded">
+      <b>${o.id}</b><br>
+      ${o.qty} ชิ้น | ${o.amount} บาท | ${o.payment}<br>
+      <a href="${o.work}" target="_.slip ? ` | <a href="${o.slip}" target="_</div>
+  `).join("")
 }
-
-function saveBudget(){
-  budget=Number(budgetInput.value)
-  localStorage.setItem("budget",budget)
-  render()
-}
-
-function toggleDarkMode(){
-  document.documentElement.classList.toggle("dark")
-}
-
-function saveToSheet(item){
-  if(GOOGLE_SHEET_API_URL.includes("PUT")) return
-  fetch(GOOGLE_SHEET_API_URL,{
-    method:"POST",
-    body:JSON.stringify(item)
-  })
-}
-
-render()
 </script>
 
 </body>
