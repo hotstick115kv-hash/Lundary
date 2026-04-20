@@ -119,12 +119,35 @@
     <p class="text-sm text-slate-500">ตรวจสอบรับ‑ส่งผ้า &amp; การชำระเงิน</p>
   </div>
 
+  <!-- ===== API SETUP ===== -->
+  <div id="sec-setup" class="section card p-5 space-y-4">
+    <div class="text-center space-y-1">
+      <div class="text-3xl">⚙️</div>
+      <h2 class="font-bold text-lg text-slate-800">ตั้งค่า API URL</h2>
+      <p class="text-xs text-slate-500">วาง URL จาก Google Apps Script ที่ Deploy แล้ว</p>
+    </div>
+    <div class="field">
+      <div class="label">Google Apps Script URL *</div>
+      <input id="setup-url" type="url" placeholder="https://script.google.com/macros/s/.../exec" style="font-size:0.78rem;">
+    </div>
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-blue-700 space-y-1">
+      <div class="font-bold">📌 วิธีได้ URL:</div>
+      <div>1. เปิด Apps Script → Deploy → New deployment</div>
+      <div>2. เลือก Web app → Execute as: Me → Anyone</div>
+      <div>3. คัดลอก URL ที่ได้มาวางด้านบน</div>
+    </div>
+    <button class="btn btn-green" onclick="saveSetup()">✅ &nbsp;บันทึกและเริ่มใช้งาน</button>
+    <div id="setup-err" class="hidden text-center text-red-500 text-sm font-semibold"></div>
+  </div>
+
   <!-- ===== MENU ===== -->
-  <div id="sec-menu" class="section active card p-5 space-y-3">
+  <div id="sec-menu" class="section card p-5 space-y-3">
+    <div id="menu-api-status" class="text-xs text-center py-1 px-3 rounded-lg bg-green-50 text-green-700 font-semibold mb-1"></div>
     <button class="btn btn-green"  onclick="show('receive')">📥 &nbsp;ยืนยันข้อมูลรับผ้า</button>
     <button class="btn btn-orange" onclick="show('deliver')">📤 &nbsp;ยืนยันข้อมูลส่งผ้า</button>
     <button class="btn btn-blue"   onclick="show('search')">🔍 &nbsp;ตรวจสอบ Order</button>
     <button class="btn btn-purple" onclick="show('dashboard')">📊 &nbsp;Dashboard & สรุป</button>
+    <button class="btn btn-ghost" onclick="show('setup')" style="font-size:0.82rem;">⚙️ เปลี่ยน API URL</button>
   </div>
 
   <!-- ===== RECEIVE FORM ===== -->
@@ -338,21 +361,43 @@
 <div id="toast" class="toast"></div>
 
 <script>
-// ⚠️  เปลี่ยน URL นี้ หลัง Deploy Apps Script ใหม่
-const API_URL = "https://script.google.com/macros/s/AKfycbzBtbfmK9WjLXc2vIAQFAT1UL_vf3I3YJX1Kug4D2_sJhMx-oBi9ylAQNbFmxmYI-4r/exec"
 const RATE = 6.06
+let API_URL = ""
 
 // State
 let dashData = null
 let dashPeriod = "today"
 let sumPeriod  = "week"
 
+/* ===== Setup ===== */
+function saveSetup() {
+  const url = document.getElementById('setup-url').value.trim()
+  if (!url.startsWith('https://script.google.com/macros/s/')) {
+    document.getElementById('setup-err').textContent = '❌ URL ไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง'
+    document.getElementById('setup-err').classList.remove('hidden')
+    return
+  }
+  document.getElementById('setup-err').classList.add('hidden')
+  API_URL = url
+  try { localStorage.setItem('laundry_api_url', url) } catch(_) {}
+  show('menu')
+}
+
 /* ===== Navigation ===== */
 function show(section) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'))
   document.getElementById('sec-' + section).classList.add('active')
   window.scrollTo({ top: 0, behavior: 'smooth' })
-  if (section === 'menu') document.getElementById('orders').innerHTML = ''
+  if (section === 'menu') {
+    try { document.getElementById('orders').innerHTML = '' } catch(_){}
+    const statusEl = document.getElementById('menu-api-status')
+    if (API_URL) {
+      statusEl.textContent = '🟢 เชื่อมต่อ API แล้ว'
+      statusEl.style.display = 'block'
+    } else {
+      statusEl.style.display = 'none'
+    }
+  }
   if (section === 'dashboard') loadDashboard()
   if (section === 'summary')   loadSummary()
 }
@@ -676,6 +721,20 @@ async function loadSummary() {
 
 // Add summary shortcut from dashboard
 document.addEventListener('DOMContentLoaded', () => {
+  // Load saved API URL
+  try {
+    const saved = localStorage.getItem('laundry_api_url')
+    if (saved) {
+      API_URL = saved
+      document.getElementById('setup-url').value = saved
+      show('menu')
+    } else {
+      show('setup')
+    }
+  } catch(_) {
+    show('setup')
+  }
+
   // Inject "ดูสรุปรายงาน" button in dashboard after load
   const dashCard = document.querySelector('#sec-dashboard .card')
   if (dashCard) {
