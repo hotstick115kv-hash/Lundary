@@ -7,7 +7,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  * { font-family: 'Sarabun', sans-serif; }
+  * { font-family: 'Sarabun', sans-serif; box-sizing: border-box; }
 
   body {
     background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 100%);
@@ -15,120 +15,83 @@
   }
 
   .card {
-    background: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.9);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255,255,255,0.6);
     border-radius: 1.25rem;
     box-shadow: 0 8px 32px rgba(0,0,0,0.08);
   }
 
-  .btn-primary {
-    background: linear-gradient(135deg, #06b6d4, #0ea5e9);
-    color: white;
-    border-radius: 0.875rem;
-    padding: 0.85rem 1.25rem;
-    font-weight: 700;
-    font-size: 1.05rem;
-    width: 100%;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 14px rgba(6,182,212,0.35);
-  }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(6,182,212,0.45); }
-  .btn-primary:active { transform: translateY(0px); }
+  .btn { display:block; width:100%; border-radius:0.875rem; padding:0.85rem 1.25rem; font-weight:700; font-size:1.05rem; text-align:center; cursor:pointer; transition:all 0.2s ease; border:none; }
+  .btn:active { transform: scale(0.98); }
+  .btn:disabled { opacity:0.6; cursor:not-allowed; transform:none !important; }
 
-  .btn-green {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    color: white;
-    border-radius: 0.875rem;
-    padding: 0.85rem 1.25rem;
-    font-weight: 700;
-    font-size: 1.05rem;
-    width: 100%;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 14px rgba(34,197,94,0.35);
-  }
-  .btn-green:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(34,197,94,0.45); }
-  .btn-green:active { transform: translateY(0px); }
+  .btn-green  { background:linear-gradient(135deg,#22c55e,#16a34a); color:#fff; box-shadow:0 4px 14px rgba(34,197,94,0.35); }
+  .btn-green:not(:disabled):hover  { box-shadow:0 6px 20px rgba(34,197,94,0.5); transform:translateY(-1px); }
 
-  .btn-ghost {
-    background: transparent;
-    color: #64748b;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 0.875rem;
-    padding: 0.65rem 1rem;
-    width: 100%;
-    font-size: 0.9rem;
-    transition: all 0.15s ease;
-  }
-  .btn-ghost:hover { background: #f1f5f9; color: #334155; }
+  .btn-blue   { background:linear-gradient(135deg,#06b6d4,#0ea5e9); color:#fff; box-shadow:0 4px 14px rgba(6,182,212,0.35); }
+  .btn-blue:not(:disabled):hover   { box-shadow:0 6px 20px rgba(6,182,212,0.5); transform:translateY(-1px); }
+
+  .btn-orange { background:linear-gradient(135deg,#f97316,#ea580c); color:#fff; box-shadow:0 4px 14px rgba(249,115,22,0.35); }
+  .btn-orange:not(:disabled):hover { box-shadow:0 6px 20px rgba(249,115,22,0.5); transform:translateY(-1px); }
+
+  .btn-ghost  { background:transparent; color:#64748b; border:1.5px solid #e2e8f0; padding:0.65rem 1rem; font-size:0.9rem; }
+  .btn-ghost:hover { background:#f1f5f9; color:#334155; }
 
   input, select {
-    width: 100%;
-    padding: 0.7rem 0.9rem;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 0.75rem;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.2s;
-    background: white;
+    width:100%; padding:0.7rem 0.9rem; border:1.5px solid #e2e8f0;
+    border-radius:0.75rem; font-size:1rem; outline:none; transition:border-color 0.2s;
+    background:white; font-family:'Sarabun',sans-serif;
   }
-  input:focus, select:focus { border-color: #06b6d4; box-shadow: 0 0 0 3px rgba(6,182,212,0.15); }
+  input:focus, select:focus { border-color:#06b6d4; box-shadow:0 0 0 3px rgba(6,182,212,0.15); }
 
-  .label { font-size: 0.82rem; font-weight: 600; color: #64748b; margin-bottom: 0.25rem; }
+  .label { font-size:0.82rem; font-weight:600; color:#64748b; margin-bottom:0.25rem; }
+  .field { display:flex; flex-direction:column; gap:0.25rem; }
 
-  .field { display: flex; flex-direction: column; gap: 0.25rem; }
+  .file-box {
+    border:2px dashed #cbd5e1; border-radius:0.75rem; padding:0.8rem;
+    text-align:center; cursor:pointer; transition:border-color 0.2s; position:relative;
+    background:white;
+  }
+  .file-box:hover { border-color:#06b6d4; }
+  .file-box input[type=file] {
+    position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%;
+  }
+  .file-box .preview { max-height:80px; max-width:100%; border-radius:0.5rem; margin-top:0.4rem; object-fit:cover; }
 
-  .section { display: none; }
-  .section.active { display: block; }
+  .section { display:none; }
+  .section.active { display:block; }
 
   .order-card {
-    background: white;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 0.875rem;
-    padding: 0.9rem 1rem;
-    font-size: 0.9rem;
+    background:white; border:1.5px solid #e2e8f0;
+    border-radius:0.875rem; padding:0.9rem 1rem; font-size:0.9rem;
   }
+  .order-card.receive { border-left:4px solid #22c55e; }
+  .order-card.deliver { border-left:4px solid #f97316; }
 
-  .badge {
-    display: inline-block;
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 0.2rem 0.55rem;
-    border-radius: 999px;
-  }
-  .badge-cash { background: #dcfce7; color: #16a34a; }
-  .badge-transfer { background: #dbeafe; color: #1d4ed8; }
-
-  .status-ok { color: #16a34a; font-weight: 700; }
+  .badge { display:inline-block; font-size:0.72rem; font-weight:700; padding:0.2rem 0.55rem; border-radius:999px; }
+  .badge-cash     { background:#dcfce7; color:#16a34a; }
+  .badge-transfer { background:#dbeafe; color:#1d4ed8; }
+  .badge-receive  { background:#f0fdf4; color:#16a34a; }
+  .badge-deliver  { background:#fff7ed; color:#ea580c; }
 
   .spinner {
-    display: inline-block;
-    width: 18px; height: 18px;
-    border: 2.5px solid rgba(255,255,255,0.4);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    vertical-align: middle;
-    margin-right: 6px;
+    display:inline-block; width:18px; height:18px;
+    border:2.5px solid rgba(255,255,255,0.4); border-top-color:white;
+    border-radius:50%; animation:spin 0.7s linear infinite;
+    vertical-align:middle; margin-right:6px;
   }
-  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes spin { to { transform:rotate(360deg); } }
 
   .toast {
-    position: fixed;
-    bottom: 1.5rem;
-    left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: #1e293b;
-    color: white;
-    padding: 0.7rem 1.4rem;
-    border-radius: 999px;
-    font-size: 0.92rem;
-    font-weight: 600;
-    z-index: 999;
-    transition: transform 0.35s cubic-bezier(.34,1.56,.64,1);
-    white-space: nowrap;
+    position:fixed; bottom:1.5rem; left:50%;
+    transform:translateX(-50%) translateY(80px);
+    background:#1e293b; color:white; padding:0.7rem 1.4rem;
+    border-radius:999px; font-size:0.92rem; font-weight:600;
+    z-index:999; transition:transform 0.35s cubic-bezier(.34,1.56,.64,1);
+    white-space:nowrap; max-width:90vw; text-align:center;
   }
-  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.show { transform:translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
@@ -144,179 +107,270 @@
 
   <!-- ===== MENU ===== -->
   <div id="sec-menu" class="section active card p-5 space-y-3">
-    <button class="btn-green" onclick="show('form')">
-      ✅ &nbsp;ยืนยันข้อมูลรับผ้า
-    </button>
-    <button class="btn-primary" onclick="show('search')">
-      🔍 &nbsp;ตรวจสอบ Order
-    </button>
+    <button class="btn btn-green"  onclick="show('receive')">📥 &nbsp;ยืนยันข้อมูลรับผ้า</button>
+    <button class="btn btn-orange" onclick="show('deliver')">📤 &nbsp;ยืนยันข้อมูลส่งผ้า</button>
+    <button class="btn btn-blue"   onclick="show('search')">🔍 &nbsp;ตรวจสอบ Order</button>
   </div>
 
-  <!-- ===== FORM ===== -->
-  <div id="sec-form" class="section card p-5 space-y-4">
+  <!-- ===== RECEIVE FORM ===== -->
+  <div id="sec-receive" class="section card p-5 space-y-4">
     <h2 class="font-bold text-lg text-slate-800">📥 ยืนยันข้อมูลรับผ้า</h2>
 
     <div class="field">
       <div class="label">ชื่อลูกค้า *</div>
-      <input id="f-name" placeholder="เช่น สมชาย ใจดี">
+      <input id="r-name" placeholder="เช่น สมชาย ใจดี">
     </div>
-
     <div class="field">
       <div class="label">เบอร์โทรศัพท์ *</div>
-      <input id="f-phone" type="tel" placeholder="0812345678" maxlength="10">
+      <input id="r-phone" type="tel" placeholder="0812345678" maxlength="10">
     </div>
-
     <div class="grid grid-cols-2 gap-3">
       <div class="field">
         <div class="label">จำนวนชิ้น *</div>
-        <input id="f-qty" type="number" min="1" placeholder="0">
+        <input id="r-qty" type="number" min="1" placeholder="0">
       </div>
       <div class="field">
         <div class="label">จำนวนเงิน (บาท) *</div>
-        <input id="f-amount" type="number" min="0" placeholder="0">
+        <input id="r-amount" type="number" min="0" placeholder="0">
+      </div>
+    </div>
+    <div class="field">
+      <div class="label">วิธีชำระเงิน *</div>
+      <select id="r-payment" onchange="toggleSlip('r')">
+        <option value="เงินสด">💵 เงินสด</option>
+        <option value="โอนเงิน">🏦 โอนเงิน</option>
+      </select>
+    </div>
+    <div class="field">
+      <div class="label">หมายเหตุ (ไม่บังคับ)</div>
+      <input id="r-note" placeholder="เช่น ผ้าสีขาว ระวังหด">
+    </div>
+    <div class="field">
+      <div class="label">รูปผ้า / ใบรับงาน (ไม่บังคับ)</div>
+      <div class="file-box">
+        <input type="file" accept="image/*" id="r-work" onchange="previewFile('r-work','r-workPrev')">
+        <div class="text-slate-400 text-sm">📷 แตะเพื่อเลือกรูป</div>
+        <img id="r-workPrev" class="preview hidden mx-auto">
+      </div>
+    </div>
+    <div id="r-slipArea" class="field hidden">
+      <div class="label">สลิปโอนเงิน *</div>
+      <div class="file-box">
+        <input type="file" accept="image/*" id="r-slip" onchange="previewFile('r-slip','r-slipPrev')">
+        <div class="text-slate-400 text-sm">🧾 แตะเพื่อแนบสลิป</div>
+        <img id="r-slipPrev" class="preview hidden mx-auto">
       </div>
     </div>
 
+    <button class="btn btn-green" id="r-submitBtn" onclick="submitForm('receive')">
+      💾 &nbsp;บันทึกข้อมูลรับผ้า
+    </button>
+    <div id="r-result" class="hidden text-center py-3 px-4 bg-green-50 border border-green-200 rounded-xl text-green-700 font-semibold text-sm"></div>
+    <button class="btn btn-ghost" onclick="show('menu')">← กลับเมนูหลัก</button>
+  </div>
+
+  <!-- ===== DELIVER FORM ===== -->
+  <div id="sec-deliver" class="section card p-5 space-y-4">
+    <h2 class="font-bold text-lg text-slate-800">📤 ยืนยันข้อมูลส่งผ้า</h2>
+
+    <div class="field">
+      <div class="label">ชื่อลูกค้า *</div>
+      <input id="d-name" placeholder="เช่น สมชาย ใจดี">
+    </div>
+    <div class="field">
+      <div class="label">เบอร์โทรศัพท์ *</div>
+      <input id="d-phone" type="tel" placeholder="0812345678" maxlength="10">
+    </div>
+    <div class="grid grid-cols-2 gap-3">
+      <div class="field">
+        <div class="label">จำนวนชิ้น *</div>
+        <input id="d-qty" type="number" min="1" placeholder="0">
+      </div>
+      <div class="field">
+        <div class="label">จำนวนเงิน (บาท) *</div>
+        <input id="d-amount" type="number" min="0" placeholder="0">
+      </div>
+    </div>
     <div class="field">
       <div class="label">วิธีชำระเงิน *</div>
-      <select id="f-payment" onchange="toggleSlip()">
-        <option value="เงินสด">💵 &nbsp;เงินสด</option>
-        <option value="โอนเงิน">🏦 &nbsp;โอนเงิน</option>
+      <select id="d-payment" onchange="toggleSlip('d')">
+        <option value="เงินสด">💵 เงินสด</option>
+        <option value="โอนเงิน">🏦 โอนเงิน</option>
       </select>
     </div>
-
     <div class="field">
-      <div class="label">รูปผ้า / ใบรับงาน (ไม่บังคับ)</div>
-      <input id="f-workImage" type="file" accept="image/*" style="padding:0.4rem;">
+      <div class="label">หมายเหตุ (ไม่บังคับ)</div>
+      <input id="d-note" placeholder="เช่น ส่งแล้ว ลูกค้ารับเรียบร้อย">
     </div>
-
-    <div id="slipArea" class="field hidden">
+    <div class="field">
+      <div class="label">รูปผ้าที่ส่ง (ไม่บังคับ)</div>
+      <div class="file-box">
+        <input type="file" accept="image/*" id="d-work" onchange="previewFile('d-work','d-workPrev')">
+        <div class="text-slate-400 text-sm">📷 แตะเพื่อเลือกรูป</div>
+        <img id="d-workPrev" class="preview hidden mx-auto">
+      </div>
+    </div>
+    <div id="d-slipArea" class="field hidden">
       <div class="label">สลิปโอนเงิน *</div>
-      <input id="f-slipImage" type="file" accept="image/*" style="padding:0.4rem;">
+      <div class="file-box">
+        <input type="file" accept="image/*" id="d-slip" onchange="previewFile('d-slip','d-slipPrev')">
+        <div class="text-slate-400 text-sm">🧾 แตะเพื่อแนบสลิป</div>
+        <img id="d-slipPrev" class="preview hidden mx-auto">
+      </div>
     </div>
 
-    <button class="btn-green" id="submitBtn" onclick="submitOrder()">
-      💾 &nbsp;บันทึกข้อมูล
+    <button class="btn btn-orange" id="d-submitBtn" onclick="submitForm('deliver')">
+      💾 &nbsp;บันทึกข้อมูลส่งผ้า
     </button>
-
-    <div id="form-result" class="hidden text-center py-3 px-4 bg-green-50 border border-green-200 rounded-xl text-green-700 font-semibold text-sm"></div>
-
-    <button class="btn-ghost" onclick="show('menu')">← กลับเมนูหลัก</button>
+    <div id="d-result" class="hidden text-center py-3 px-4 bg-orange-50 border border-orange-200 rounded-xl text-orange-700 font-semibold text-sm"></div>
+    <button class="btn btn-ghost" onclick="show('menu')">← กลับเมนูหลัก</button>
   </div>
 
   <!-- ===== SEARCH ===== -->
   <div id="sec-search" class="section card p-5 space-y-4">
     <h2 class="font-bold text-lg text-slate-800">🔍 ตรวจสอบ Order</h2>
-
     <div class="field">
       <div class="label">เบอร์โทรศัพท์</div>
       <input id="s-phone" type="tel" placeholder="0812345678" maxlength="10"
         onkeydown="if(event.key==='Enter') searchOrder()">
     </div>
-
-    <button class="btn-primary" id="searchBtn" onclick="searchOrder()">
-      🔎 &nbsp;ค้นหา
-    </button>
-
+    <button class="btn btn-blue" id="searchBtn" onclick="searchOrder()">🔎 &nbsp;ค้นหา</button>
     <div id="orders" class="space-y-2"></div>
-
-    <button class="btn-ghost" onclick="show('menu')">← กลับเมนูหลัก</button>
+    <button class="btn btn-ghost" onclick="show('menu')">← กลับเมนูหลัก</button>
   </div>
 
 </div>
 
-<!-- Toast -->
 <div id="toast" class="toast"></div>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbyf19zeCtZMnZQ2ao53wjZotbOyzGFgyF33cfKa2xmyC2Y6SjECDXgJEt_f6LAMxpCA/exec"
 
-/* ---- navigation ---- */
+/* ===== Navigation ===== */
 function show(section) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'))
   document.getElementById('sec-' + section).classList.add('active')
-  // reset results when going back
+  window.scrollTo({ top: 0, behavior: 'smooth' })
   if (section === 'menu') {
-    document.getElementById('form-result').classList.add('hidden')
     document.getElementById('orders').innerHTML = ''
   }
 }
 
-/* ---- slip area toggle ---- */
-function toggleSlip() {
-  const pay = document.getElementById('f-payment').value
-  document.getElementById('slipArea').classList.toggle('hidden', pay !== 'โอนเงิน')
-}
-
-/* ---- toast ---- */
-function toast(msg, duration = 3000) {
+/* ===== Toast ===== */
+function toast(msg, duration = 3500) {
   const t = document.getElementById('toast')
   t.textContent = msg
   t.classList.add('show')
   setTimeout(() => t.classList.remove('show'), duration)
 }
 
-/* ---- submit order ---- */
-async function submitOrder() {
-  const name    = document.getElementById('f-name').value.trim()
-  const phone   = document.getElementById('f-phone').value.trim()
-  const qty     = document.getElementById('f-qty').value.trim()
-  const amount  = document.getElementById('f-amount').value.trim()
-  const payment = document.getElementById('f-payment').value
-  const workImg = document.getElementById('f-workImage')
-  const slipImg = document.getElementById('f-slipImage')
+/* ===== Toggle slip area ===== */
+function toggleSlip(prefix) {
+  const pay = document.getElementById(prefix + '-payment').value
+  document.getElementById(prefix + '-slipArea').classList.toggle('hidden', pay !== 'โอนเงิน')
+}
 
-  // validation
-  if (!name || !phone || !qty || !amount) {
-    toast('⚠️ กรุณากรอกข้อมูลให้ครบถ้วน')
-    return
+/* ===== Preview image ===== */
+function previewFile(inputId, previewId) {
+  const file = document.getElementById(inputId).files[0]
+  const prev = document.getElementById(previewId)
+  if (file) {
+    const reader = new FileReader()
+    reader.onload = e => {
+      prev.src = e.target.result
+      prev.classList.remove('hidden')
+    }
+    reader.readAsDataURL(file)
+  } else {
+    prev.classList.add('hidden')
   }
-  if (phone.length < 9) {
-    toast('⚠️ เบอร์โทรไม่ถูกต้อง')
-    return
-  }
-  if (payment === 'โอนเงิน' && !slipImg.files[0]) {
-    toast('⚠️ กรุณาแนบสลิปโอนเงิน')
-    return
-  }
+}
 
-  const btn = document.getElementById('submitBtn')
+/* ===== File → base64 ===== */
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader()
+    r.onload = () => resolve(r.result.split(',')[1])
+    r.onerror = reject
+    r.readAsDataURL(file)
+  })
+}
+
+/* ===== Submit form ===== */
+async function submitForm(type) {
+  const p = type === 'receive' ? 'r' : 'd'
+  const name    = document.getElementById(p + '-name').value.trim()
+  const phone   = document.getElementById(p + '-phone').value.trim()
+  const qty     = document.getElementById(p + '-qty').value.trim()
+  const amount  = document.getElementById(p + '-amount').value.trim()
+  const payment = document.getElementById(p + '-payment').value
+  const note    = document.getElementById(p + '-note').value.trim()
+  const workEl  = document.getElementById(p + '-work')
+  const slipEl  = document.getElementById(p + '-slip')
+  const workFile = workEl.files[0]
+  const slipFile = slipEl ? slipEl.files[0] : null
+
+  if (!name || !phone || !qty || !amount) { toast('⚠️ กรุณากรอกข้อมูลให้ครบถ้วน'); return }
+  if (phone.length < 9)                  { toast('⚠️ เบอร์โทรไม่ถูกต้อง'); return }
+  if (payment === 'โอนเงิน' && !slipFile){ toast('⚠️ กรุณาแนบสลิปโอนเงิน'); return }
+
+  const btn = document.getElementById(p + '-submitBtn')
+  const origHTML = btn.innerHTML
   btn.innerHTML = '<span class="spinner"></span> กำลังบันทึก...'
   btn.disabled = true
 
   try {
-    const fd = new FormData()
-    fd.append('name', name)
-    fd.append('phone', phone)
-    fd.append('qty', qty)
-    fd.append('amount', amount)
-    fd.append('payment', payment)
-    if (workImg.files[0]) fd.append('work', workImg.files[0])
-    if (slipImg.files[0]) fd.append('slip', slipImg.files[0])
+    // Google Apps Script ไม่รองรับ multipart FormData จาก browser
+    // ส่งเป็น JSON + base64 แทน
+    const payload = { type, name, phone, qty, amount, payment, note }
+    if (workFile) {
+      payload.workBase64 = await fileToBase64(workFile)
+      payload.workName   = workFile.name
+      payload.workType   = workFile.type
+    }
+    if (slipFile) {
+      payload.slipBase64 = await fileToBase64(slipFile)
+      payload.slipName   = slipFile.name
+      payload.slipType   = slipFile.type
+    }
 
-    const res  = await fetch(API_URL, { method: 'POST', body: fd })
-    const data = await res.json()
+    const res  = await fetch(API_URL, {
+      method: 'POST',
+      // GAS doPost รับ text/plain ได้ผ่าน e.postData.contents
+      // แต่ถ้า GAS ยังไม่รองรับ ให้ใช้ no-cors แบบ GET fallback
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    })
 
-    const resultEl = document.getElementById('form-result')
+    let data = {}
+    try { data = await res.json() } catch (_) { data = { orderId: 'รอดำเนินการ' } }
+
+    const resultEl = document.getElementById(p + '-result')
     resultEl.classList.remove('hidden')
-    resultEl.innerHTML = `✅ บันทึกสำเร็จ!<br>Order ID: <span class="font-bold text-base">${data.orderId}</span>`
+    resultEl.innerHTML = `✅ บันทึกสำเร็จ!<br>Order ID: <span class="font-bold text-base">${data.orderId ?? '—'}</span>`
 
-    // clear form
-    ;['f-name','f-phone','f-qty','f-amount'].forEach(id => document.getElementById(id).value = '')
-    workImg.value = ''
-    slipImg.value = ''
+    // clear fields
+    ;[p+'-name', p+'-phone', p+'-qty', p+'-amount', p+'-note'].forEach(id => {
+      document.getElementById(id).value = ''
+    })
+    workEl.value = ''
+    if (slipEl) slipEl.value = ''
+    ;[p+'-workPrev', p+'-slipPrev'].forEach(id => {
+      const el = document.getElementById(id)
+      if (el) { el.src = ''; el.classList.add('hidden') }
+    })
 
-    toast('✅ บันทึกข้อมูลสำเร็จ')
+    toast('✅ บันทึกข้อมูลสำเร็จ!')
   } catch (err) {
-    toast('❌ เกิดข้อผิดพลาด โปรดลองใหม่')
+    toast('❌ ส่งข้อมูลไม่ได้: ' + err.message)
     console.error(err)
   } finally {
-    btn.innerHTML = '💾 &nbsp;บันทึกข้อมูล'
+    btn.innerHTML = origHTML
     btn.disabled = false
   }
 }
 
-/* ---- search order ---- */
+/* ===== Search ===== */
 async function searchOrder() {
   const phone = document.getElementById('s-phone').value.trim()
   if (!phone) { toast('⚠️ กรุณากรอกเบอร์โทร'); return }
@@ -329,7 +383,6 @@ async function searchOrder() {
   try {
     const res  = await fetch(API_URL + '?phone=' + encodeURIComponent(phone))
     const data = await res.json()
-
     const container = document.getElementById('orders')
 
     if (!Array.isArray(data) || data.length === 0) {
@@ -342,32 +395,39 @@ async function searchOrder() {
     }
 
     container.innerHTML = data.map(o => {
-      const badgeClass  = o.payment === 'โอนเงิน' ? 'badge-transfer' : 'badge-cash'
-      const payIcon     = o.payment === 'โอนเงิน' ? '🏦' : '💵'
-      const workLink    = o.work  ? `<a href="${o.work}"  target="_blank" class="text-sky-600 underline text-xs">📷 รูปผ้า</a>` : ''
-      const slipLink    = o.slip  ? `<a href="${o.slip}"  target="_blank" class="text-sky-600 underline text-xs">🧾 สลิป</a>` : ''
-      const dateStr     = o.date  ? `<span class="text-slate-400 text-xs">${o.date}</span>` : ''
+      const isDeliver  = o.type === 'deliver'
+      const cardClass  = isDeliver ? 'deliver' : 'receive'
+      const typeLabel  = isDeliver ? '📤 ส่งผ้า' : '📥 รับผ้า'
+      const typeBadge  = isDeliver ? 'badge-deliver' : 'badge-receive'
+      const payBadge   = o.payment === 'โอนเงิน' ? 'badge-transfer' : 'badge-cash'
+      const payIcon    = o.payment === 'โอนเงิน' ? '🏦' : '💵'
+      const workLink   = o.work  ? `<a href="${o.work}"  target="_blank" class="text-sky-600 underline text-xs">📷 รูปผ้า</a>` : ''
+      const slipLink   = o.slip  ? `<a href="${o.slip}"  target="_blank" class="text-sky-600 underline text-xs">🧾 สลิป</a>` : ''
+      const dateStr    = o.date  ? `<span class="text-slate-400 text-xs">${o.date}</span>` : ''
+      const noteStr    = o.note  ? `<div class="text-slate-500 text-xs mt-1">📝 ${o.note}</div>` : ''
 
       return `
-        <div class="order-card">
-          <div class="flex items-center justify-between mb-1">
+        <div class="order-card ${cardClass}">
+          <div class="flex items-center justify-between mb-2">
             <span class="font-bold text-slate-700"># ${o.id}</span>
             ${dateStr}
           </div>
-          <div class="text-slate-600">
-            🧺 ${o.qty} ชิ้น &nbsp;|&nbsp; 💰 ${Number(o.amount).toLocaleString()} บาท
+          <div class="flex gap-2 mb-2 flex-wrap">
+            <span class="badge ${typeBadge}">${typeLabel}</span>
+            <span class="badge ${payBadge}">${payIcon} ${o.payment}</span>
           </div>
-          <div class="flex items-center gap-2 mt-2">
-            <span class="badge ${badgeClass}">${payIcon} ${o.payment}</span>
-            ${workLink}
-            ${slipLink}
-          </div>
+          <div class="text-slate-600">🧺 ${o.qty} ชิ้น &nbsp;|&nbsp; 💰 ${Number(o.amount).toLocaleString()} บาท</div>
+          ${noteStr}
+          <div class="flex gap-3 mt-2">${workLink}${slipLink}</div>
         </div>`
     }).join('')
 
   } catch (err) {
     document.getElementById('orders').innerHTML = `
-      <div class="text-center py-4 text-red-400">❌ เกิดข้อผิดพลาด โปรดลองใหม่</div>`
+      <div class="text-center py-4 text-red-400 text-sm">
+        ❌ เกิดข้อผิดพลาด โปรดลองใหม่<br>
+        <span class="text-xs text-slate-400">${err.message}</span>
+      </div>`
     console.error(err)
   } finally {
     btn.innerHTML = '🔎 &nbsp;ค้นหา'
