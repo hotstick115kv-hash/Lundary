@@ -20,7 +20,6 @@
     min-height:100vh;
   }
 
-  /* === GLASS CARD === */
   .card {
     background: rgba(255,255,255,0.82);
     backdrop-filter: blur(20px) saturate(1.4);
@@ -36,7 +35,6 @@
     box-shadow: 0 2px 12px rgba(0,0,0,0.07);
   }
 
-  /* === BUTTONS === */
   .btn {
     display: flex; align-items:center; justify-content:center; gap:0.5rem;
     width:100%; border-radius:1rem; padding:0.9rem 1.25rem;
@@ -59,8 +57,8 @@
   .btn-ghost  { background:rgba(255,255,255,0.6); color:#475569; border:1.5px solid rgba(203,213,225,0.8); font-size:0.9rem; padding:0.65rem 1rem; }
   .btn-ghost:hover { background:rgba(255,255,255,0.9); color:#1e293b; }
   .btn-danger { background:linear-gradient(135deg,#f87171,#dc2626); color:#fff; box-shadow:0 4px 18px rgba(239,68,68,0.35); }
+  .btn-yellow { background:linear-gradient(135deg,#fde68a,#f59e0b); color:#78350f; box-shadow:0 4px 18px rgba(245,158,11,0.35); }
 
-  /* === FORM === */
   .field { display:flex; flex-direction:column; gap:0.3rem; }
   .label { font-size:0.8rem; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.05em; }
 
@@ -76,7 +74,6 @@
     background:white;
   }
 
-  /* === AMOUNT DISPLAY === */
   .amount-box {
     background: linear-gradient(135deg,#f0fdf4,#dcfce7);
     border: 2px solid #86efac; border-radius: 1rem;
@@ -87,7 +84,6 @@
   .amount-box .a-sub   { font-size:0.72rem; color:#86efac; margin-top:1px; }
   .amount-box .a-val   { font-size:1.5rem; font-weight:800; color:#15803d; }
 
-  /* === FILE BOX === */
   .file-box {
     border: 2px dashed #cbd5e1; border-radius:0.875rem;
     padding:0.85rem; text-align:center; cursor:pointer;
@@ -97,11 +93,9 @@
   .file-box input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
   .file-box .preview { max-height:90px; max-width:100%; border-radius:0.5rem; margin-top:0.5rem; object-fit:cover; }
 
-  /* === SECTION === */
   .section { display:none; }
   .section.active { display:block; }
 
-  /* === ORDER CARD === */
   .order-card {
     background:rgba(255,255,255,0.85); border:1.5px solid #e2e8f0;
     border-radius:1rem; padding:0.9rem 1rem; font-size:0.88rem;
@@ -111,7 +105,6 @@
   .order-card.receive { border-left:4px solid #22c55e; }
   .order-card.deliver { border-left:4px solid #f97316; }
 
-  /* === BADGES === */
   .badge {
     display:inline-flex; align-items:center; gap:3px;
     font-size:0.7rem; font-weight:700;
@@ -123,7 +116,6 @@
   .b-deliver  { background:#fff7ed; color:#ea580c; border:1px solid #fed7aa; }
   .b-name     { background:#f1f5f9; color:#475569; border:1px solid #e2e8f0; }
 
-  /* === STAT CARDS === */
   .stat-card {
     border-radius:1.1rem; padding:1rem 1.1rem;
     display:flex; align-items:center; gap:0.8rem;
@@ -136,7 +128,6 @@
   .s-blue   { background:linear-gradient(135deg,#dbeafe,#bfdbfe); color:#1d4ed8; }
   .s-purple { background:linear-gradient(135deg,#f3e8ff,#e9d5ff); color:#6b21a8; }
 
-  /* === TABS === */
   .tab-bar { display:flex; background:rgba(241,245,249,0.8); border-radius:0.875rem; padding:0.22rem; gap:0.2rem; }
   .tab-btn {
     flex:1; padding:0.48rem; border-radius:0.65rem;
@@ -145,7 +136,6 @@
   }
   .tab-btn.active { background:white; color:#0f172a; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
 
-  /* === TABLE === */
   .tbl { width:100%; border-collapse:collapse; font-size:0.83rem; }
   .tbl th { background:#f8fafc; color:#64748b; font-weight:700; padding:0.5rem 0.65rem;
     text-align:left; border-bottom:1.5px solid #e2e8f0; font-size:0.75rem; letter-spacing:0.03em; }
@@ -153,7 +143,6 @@
   .tbl tr:last-child td { border-bottom:none; }
   .tbl tr:hover td { background:#f8fafc; }
 
-  /* === SPINNER === */
   .spinner {
     display:inline-block; width:17px; height:17px;
     border:2.5px solid rgba(255,255,255,0.35); border-top-color:white;
@@ -161,7 +150,6 @@
   }
   @keyframes spin { to { transform:rotate(360deg); } }
 
-  /* === TOAST === */
   .toast {
     position:fixed; bottom:1.75rem; left:50%;
     transform: translateX(-50%) translateY(100px);
@@ -174,7 +162,6 @@
   }
   .toast.show { transform:translateX(-50%) translateY(0); }
 
-  /* === SKELETON === */
   .skel {
     background: linear-gradient(90deg,#f1f5f9 25%,#e9eef5 50%,#f1f5f9 75%);
     background-size:300% 100%; animation:shim 1.4s infinite;
@@ -182,7 +169,6 @@
   }
   @keyframes shim { 0%{background-position:100% 0} 100%{background-position:-100% 0} }
 
-  /* === SETUP STEPS === */
   .step { display:flex; gap:0.8rem; align-items:flex-start; }
   .step-n {
     min-width:1.7rem; height:1.7rem; border-radius:50%;
@@ -198,13 +184,11 @@
     border-radius:4px; font-family:monospace; font-size:0.8rem;
   }
 
-  /* === URL INPUT === */
   #setup-url {
     font-size:0.78rem; word-break:break-all;
     padding:0.8rem 1rem; letter-spacing:0.01em;
   }
 
-  /* === PING DOT === */
   @keyframes ping { 0%{transform:scale(1);opacity:0.8} 70%,100%{transform:scale(2);opacity:0} }
   .ping-dot { position:relative; display:inline-block; width:8px; height:8px; }
   .ping-dot span {
@@ -213,7 +197,6 @@
   }
   .ping-dot i { position:absolute; inset:0; border-radius:50%; background:#22c55e; }
 
-  /* === MENU ICON BUTTONS === */
   .menu-btn {
     display:flex; align-items:center; gap:1rem;
     width:100%; border-radius:1.25rem; padding:1rem 1.25rem;
@@ -235,7 +218,6 @@
   .mb-b  { background:linear-gradient(135deg,#bae6fd,#38bdf8); }
   .mb-p  { background:linear-gradient(135deg,#e9d5ff,#c084fc); }
 
-  /* === RESULT BOX === */
   .result-box {
     border-radius:1rem; padding:0.9rem 1.1rem;
     text-align:center; font-weight:700; font-size:0.92rem;
@@ -243,7 +225,23 @@
   .result-ok  { background:#f0fdf4; border:1.5px solid #86efac; color:#15803d; }
   .result-err { background:#fef2f2; border:1.5px solid #fca5a5; color:#dc2626; }
 
-  /* scrollbar */
+  /* === MODAL === */
+  .modal-overlay {
+    position:fixed; inset:0; background:rgba(0,0,0,0.45);
+    backdrop-filter:blur(4px); z-index:1000;
+    display:flex; align-items:center; justify-content:center;
+    padding:1rem;
+    opacity:0; pointer-events:none; transition:opacity 0.2s;
+  }
+  .modal-overlay.open { opacity:1; pointer-events:all; }
+  .modal-box {
+    background:white; border-radius:1.5rem; padding:1.5rem;
+    width:100%; max-width:420px; max-height:85vh; overflow-y:auto;
+    transform:scale(0.92) translateY(20px); transition:transform 0.25s cubic-bezier(.34,1.56,.64,1);
+    box-shadow:0 25px 60px rgba(0,0,0,0.25);
+  }
+  .modal-overlay.open .modal-box { transform:scale(1) translateY(0); }
+
   ::-webkit-scrollbar { width:4px; }
   ::-webkit-scrollbar-track { background:transparent; }
   ::-webkit-scrollbar-thumb { background:#cbd5e1; border-radius:99px; }
@@ -252,43 +250,27 @@
 <body>
 <div id="app" class="max-w-md mx-auto px-4 py-7 space-y-4">
 
-  <!-- ─── HEADER ─── -->
+  <!-- HEADER -->
   <div class="text-center space-y-1 py-2">
     <div style="font-size:2.8rem;line-height:1.1">🧺</div>
     <h1 style="font-size:1.6rem;font-weight:800;color:#1e293b;letter-spacing:-0.02em">Check List</h1>
     <p style="font-size:0.82rem;color:#94a3b8;font-weight:500">ตรวจสอบรับ‑ส่งผ้า &amp; การชำระเงิน</p>
   </div>
 
-  <!-- ═══════════════════ SETUP ═══════════════════ -->
+  <!-- SETUP -->
   <div id="sec-setup" class="section card p-5 space-y-4">
-
     <div class="text-center pb-3" style="border-bottom:1px solid rgba(0,0,0,0.05)">
       <div style="font-size:2.2rem">⚙️</div>
       <h2 style="font-size:1.15rem;font-weight:800;color:#1e293b;margin-top:4px">ตั้งค่า API URL</h2>
       <p style="font-size:0.78rem;color:#94a3b8;margin-top:2px">ทำครั้งเดียว — ระบบจะจำให้อัตโนมัติ</p>
     </div>
 
-    <!-- Steps -->
     <div style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #bae6fd;border-radius:1rem;padding:1rem 1.1rem" class="space-y-3">
       <p style="font-size:0.72rem;font-weight:800;color:#0369a1;letter-spacing:0.08em">📋 วิธีรับ URL จาก Google Apps Script</p>
-      <div class="step">
-        <div class="step-n">1</div>
-        <div class="step-t">เปิด Google Sheet → เมนู <b>Extensions</b> → <b>Apps Script</b></div>
-      </div>
-      <div class="step">
-        <div class="step-n">2</div>
-        <div class="step-t">ลบโค้ดเดิมออก วางโค้ดใหม่ที่ได้รับ กด <b>Save</b> (💾)</div>
-      </div>
-      <div class="step">
-        <div class="step-n">3</div>
-        <div class="step-t">กด <b>Deploy → New deployment</b> → เลือก <b>Web app</b><br>
-          ตั้ง <b>Execute as:</b> <code>Me</code> &nbsp;|&nbsp; <b>Who has access:</b> <code>Anyone</code>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-n">4</div>
-        <div class="step-t">คลิก <b>Deploy</b> → คัดลอก <b>Web app URL</b> มาวางด้านล่าง</div>
-      </div>
+      <div class="step"><div class="step-n">1</div><div class="step-t">เปิด Google Sheet → เมนู <b>Extensions</b> → <b>Apps Script</b></div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-t">ลบโค้ดเดิมออก วางโค้ดใหม่ที่ได้รับ กด <b>Save</b> (💾)</div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-t">กด <b>Deploy → New deployment</b> → เลือก <b>Web app</b><br>ตั้ง <b>Execute as:</b> <code>Me</code> &nbsp;|&nbsp; <b>Who has access:</b> <code>Anyone</code></div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-t">คลิก <b>Deploy</b> → คัดลอก <b>Web app URL</b> มาวางด้านล่าง</div></div>
       <div style="background:rgba(255,255,255,0.6);border-radius:0.75rem;padding:0.6rem 0.8rem">
         <p style="font-size:0.72rem;color:#64748b;font-weight:600">⚠️ URL ที่ถูกต้องจะมีหน้าตาแบบนี้:</p>
         <p style="font-size:0.68rem;color:#94a3b8;word-break:break-all;margin-top:2px;font-family:monospace">https://script.google.com/macros/s/<b>XXXXX</b>/exec</p>
@@ -297,18 +279,14 @@
 
     <div class="field">
       <div class="label">📌 วาง Web App URL ที่นี่</div>
-      <input id="setup-url" type="url" placeholder="https://script.google.com/macros/s/AKfycbw_Fv66UN_LStQUoB-DqGP516VVKI8f9s8h2GZv_DTVHd3v-NBlakPXHBaXlwG6pEHoOw/exec" autocomplete="off" spellcheck="false">
+      <input id="setup-url" type="url" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off" spellcheck="false">
     </div>
-
     <div id="setup-err" style="display:none;background:#fef2f2;border:1.5px solid #fca5a5;border-radius:0.875rem;padding:0.75rem 1rem;color:#dc2626;font-size:0.85rem;font-weight:700;text-align:center"></div>
-
     <button class="btn btn-blue" onclick="saveSetup()">✅ &nbsp;บันทึกและเริ่มใช้งาน</button>
   </div>
 
-  <!-- ═══════════════════ MENU ═══════════════════ -->
+  <!-- MENU -->
   <div id="sec-menu" class="section space-y-3">
-
-    <!-- API status bar -->
     <div class="card-sm" style="padding:0.65rem 1rem;display:flex;align-items:center;justify-content:space-between">
       <div style="display:flex;align-items:center;gap:0.5rem">
         <div class="ping-dot"><span></span><i></i></div>
@@ -316,10 +294,8 @@
       </div>
       <button onclick="show('setup')" style="font-size:0.72rem;color:#94a3b8;background:none;border:none;cursor:pointer;font-family:inherit;padding:2px 6px;border-radius:6px;transition:color 0.15s" onmouseover="this.style.color='#475569'" onmouseout="this.style.color='#94a3b8'">⚙️ เปลี่ยน URL</button>
     </div>
-
     <div class="card p-4 space-y-2">
       <p style="font-size:0.72rem;font-weight:800;color:#94a3b8;letter-spacing:0.06em;padding-bottom:2px">เมนูหลัก</p>
-
       <button class="menu-btn" onclick="show('receive')">
         <div class="mb-icon mb-g">📥</div>
         <div><div class="mb-title">ยืนยันข้อมูลรับผ้า</div><div class="mb-sub">บันทึกการรับผ้าจากลูกค้า</div></div>
@@ -332,7 +308,7 @@
       </button>
       <button class="menu-btn" onclick="show('search')">
         <div class="mb-icon mb-b">🔍</div>
-        <div><div class="mb-title">ตรวจสอบ Order</div><div class="mb-sub">ค้นหาประวัติรับ‑ส่งผ้า</div></div>
+        <div><div class="mb-title">ตรวจสอบ / แก้ไข Order</div><div class="mb-sub">ค้นหา แก้ไข ประวัติรับ‑ส่งผ้า</div></div>
         <span style="margin-left:auto;color:#cbd5e1;font-size:1.1rem">›</span>
       </button>
       <button class="menu-btn" onclick="show('dashboard')">
@@ -343,13 +319,12 @@
     </div>
   </div>
 
-  <!-- ═══════════════════ RECEIVE ═══════════════════ -->
+  <!-- RECEIVE -->
   <div id="sec-receive" class="section card p-5 space-y-4">
     <div style="display:flex;align-items:center;gap:0.75rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(0,0,0,0.05)">
       <div style="width:2.2rem;height:2.2rem;background:linear-gradient(135deg,#bbf7d0,#4ade80);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;font-size:1.2rem">📥</div>
       <h2 style="font-size:1.1rem;font-weight:800;color:#1e293b">ยืนยันข้อมูลรับผ้า</h2>
     </div>
-
     <div class="field">
       <div class="label">👤 ชื่อลูกค้า *</div>
       <select id="r-name"><option value="">— เลือกชื่อ —</option><option>แอร์</option><option>ออยล์</option><option>เอ๊าะ</option></select>
@@ -379,7 +354,7 @@
       <div class="file-box">
         <input type="file" accept="image/*" id="r-work" onchange="prevFile('r-work','r-wPrev')">
         <div style="color:#94a3b8;font-size:0.85rem">📷 แตะเพื่อเลือกรูป</div>
-        <img id="r-wPrev" class="preview" style="display:none" class="mx-auto">
+        <img id="r-wPrev" class="preview" style="display:none">
       </div>
     </div>
     <div id="r-slipArea" class="field" style="display:none">
@@ -387,7 +362,7 @@
       <div class="file-box">
         <input type="file" accept="image/*" id="r-slip" onchange="prevFile('r-slip','r-sPrev')">
         <div style="color:#94a3b8;font-size:0.85rem">🧾 แตะเพื่อแนบสลิป</div>
-        <img id="r-sPrev" class="preview" style="display:none" class="mx-auto">
+        <img id="r-sPrev" class="preview" style="display:none">
       </div>
     </div>
     <button class="btn btn-green" id="r-submitBtn" onclick="submitForm('receive')">💾 &nbsp;บันทึกข้อมูลรับผ้า</button>
@@ -395,13 +370,12 @@
     <button class="btn btn-ghost" onclick="show('menu')">← กลับเมนูหลัก</button>
   </div>
 
-  <!-- ═══════════════════ DELIVER ═══════════════════ -->
+  <!-- DELIVER -->
   <div id="sec-deliver" class="section card p-5 space-y-4">
     <div style="display:flex;align-items:center;gap:0.75rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(0,0,0,0.05)">
       <div style="width:2.2rem;height:2.2rem;background:linear-gradient(135deg,#fed7aa,#fb923c);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;font-size:1.2rem">📤</div>
       <h2 style="font-size:1.1rem;font-weight:800;color:#1e293b">ยืนยันข้อมูลส่งผ้า</h2>
     </div>
-
     <div class="field">
       <div class="label">👤 ชื่อลูกค้า *</div>
       <select id="d-name"><option value="">— เลือกชื่อ —</option><option>แอร์</option><option>ออยล์</option><option>เอ๊าะ</option></select>
@@ -431,7 +405,7 @@
       <div class="file-box">
         <input type="file" accept="image/*" id="d-work" onchange="prevFile('d-work','d-wPrev')">
         <div style="color:#94a3b8;font-size:0.85rem">📷 แตะเพื่อเลือกรูป</div>
-        <img id="d-wPrev" class="preview" style="display:none" class="mx-auto">
+        <img id="d-wPrev" class="preview" style="display:none">
       </div>
     </div>
     <div id="d-slipArea" class="field" style="display:none">
@@ -439,7 +413,7 @@
       <div class="file-box">
         <input type="file" accept="image/*" id="d-slip" onchange="prevFile('d-slip','d-sPrev')">
         <div style="color:#94a3b8;font-size:0.85rem">🧾 แตะเพื่อแนบสลิป</div>
-        <img id="d-sPrev" class="preview" style="display:none" class="mx-auto">
+        <img id="d-sPrev" class="preview" style="display:none">
       </div>
     </div>
     <button class="btn btn-orange" id="d-submitBtn" onclick="submitForm('deliver')">💾 &nbsp;บันทึกข้อมูลส่งผ้า</button>
@@ -447,11 +421,11 @@
     <button class="btn btn-ghost" onclick="show('menu')">← กลับเมนูหลัก</button>
   </div>
 
-  <!-- ═══════════════════ SEARCH ═══════════════════ -->
+  <!-- SEARCH -->
   <div id="sec-search" class="section card p-5 space-y-4">
     <div style="display:flex;align-items:center;gap:0.75rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(0,0,0,0.05)">
       <div style="width:2.2rem;height:2.2rem;background:linear-gradient(135deg,#bae6fd,#38bdf8);border-radius:0.75rem;display:flex;align-items:center;justify-content:center;font-size:1.2rem">🔍</div>
-      <h2 style="font-size:1.1rem;font-weight:800;color:#1e293b">ตรวจสอบ Order</h2>
+      <h2 style="font-size:1.1rem;font-weight:800;color:#1e293b">ตรวจสอบ / แก้ไข Order</h2>
     </div>
     <div class="field">
       <div class="label">👤 ชื่อลูกค้า</div>
@@ -462,9 +436,8 @@
     <button class="btn btn-ghost" onclick="show('menu')">← กลับเมนูหลัก</button>
   </div>
 
-  <!-- ═══════════════════ DASHBOARD ═══════════════════ -->
+  <!-- DASHBOARD -->
   <div id="sec-dashboard" class="section space-y-4">
-
     <div class="card p-5 space-y-4">
       <div style="display:flex;align-items:center;justify-content:space-between">
         <div style="display:flex;align-items:center;gap:0.6rem">
@@ -473,26 +446,22 @@
         </div>
         <button onclick="loadDashboard()" style="font-size:0.8rem;color:#0ea5e9;font-weight:700;background:rgba(14,165,233,0.08);border:1.5px solid rgba(14,165,233,0.2);border-radius:0.6rem;padding:0.3rem 0.75rem;cursor:pointer;font-family:inherit">🔄 รีเฟรช</button>
       </div>
-
       <div class="tab-bar" id="dashTabs">
         <button class="tab-btn active" onclick="setDashP('today',this)">วันนี้</button>
         <button class="tab-btn" onclick="setDashP('week',this)">สัปดาห์</button>
         <button class="tab-btn" onclick="setDashP('month',this)">เดือนนี้</button>
         <button class="tab-btn" onclick="setDashP('total',this)">ทั้งหมด</button>
       </div>
-
       <div class="grid grid-cols-2 gap-3" id="dashStats">
         <div class="skel col-span-2" style="height:78px"></div>
         <div class="skel" style="height:78px"></div>
         <div class="skel" style="height:78px"></div>
       </div>
     </div>
-
     <div class="card p-5 space-y-3">
       <h3 style="font-weight:800;color:#1e293b;font-size:0.95rem">👥 แยกตามลูกค้า (เดือนนี้)</h3>
       <div id="custTable"><div class="skel" style="height:80px"></div></div>
     </div>
-
     <div class="card p-5 space-y-3">
       <h3 style="font-weight:800;color:#1e293b;font-size:0.95rem">🕐 รายการล่าสุด</h3>
       <div id="recentOrders" class="space-y-2">
@@ -501,12 +470,11 @@
         <div class="skel" style="height:60px"></div>
       </div>
     </div>
-
     <button class="btn btn-purple" onclick="show('summary')" style="margin-bottom:0">📅 &nbsp;ดูสรุปรายสัปดาห์ / รายเดือน</button>
     <button class="btn btn-ghost" onclick="show('menu')" style="margin-top:0">← กลับเมนูหลัก</button>
   </div>
 
-  <!-- ═══════════════════ SUMMARY ═══════════════════ -->
+  <!-- SUMMARY -->
   <div id="sec-summary" class="section space-y-4">
     <div class="card p-5 space-y-4">
       <div style="display:flex;align-items:center;gap:0.75rem;padding-bottom:0.75rem;border-bottom:1px solid rgba(0,0,0,0.05)">
@@ -527,6 +495,50 @@
   </div>
 
 </div><!-- /app -->
+
+<!-- ══════════ EDIT MODAL ══════════ -->
+<div id="editModal" class="modal-overlay" onclick="closeEditIfOutside(event)">
+  <div class="modal-box space-y-4">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:0.75rem;border-bottom:1px solid #f1f5f9">
+      <h3 style="font-weight:800;color:#1e293b;font-size:1rem">✏️ แก้ไขรายการ <span id="edit-idLabel" style="color:#94a3b8;font-size:0.85rem"></span></h3>
+      <button onclick="closeEdit()" style="background:#f1f5f9;border:none;border-radius:0.5rem;width:2rem;height:2rem;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">×</button>
+    </div>
+
+    <input type="hidden" id="edit-rowId">
+    <input type="hidden" id="edit-type">
+
+    <div class="field">
+      <div class="label">👤 ชื่อลูกค้า *</div>
+      <select id="edit-name"><option value="">— เลือกชื่อ —</option><option>แอร์</option><option>ออยล์</option><option>เอ๊าะ</option></select>
+    </div>
+    <div class="field">
+      <div class="label">🧺 จำนวนชิ้น *</div>
+      <input id="edit-qty" type="number" min="1" inputmode="numeric" oninput="calcEditAmt()">
+    </div>
+    <div class="amount-box">
+      <div><div class="a-label">💰 จำนวนเงิน (คำนวณอัตโนมัติ)</div><div class="a-sub">ชิ้น × 6.06 บาท</div></div>
+      <div class="a-val" id="edit-amtDisp">0.00 ฿</div>
+    </div>
+    <input type="hidden" id="edit-amount" value="0">
+    <div class="field">
+      <div class="label">💳 วิธีชำระเงิน *</div>
+      <select id="edit-payment">
+        <option value="เงินสด">💵 เงินสด</option>
+        <option value="โอนเงิน">🏦 โอนเงิน</option>
+      </select>
+    </div>
+    <div class="field">
+      <div class="label">📝 หมายเหตุ</div>
+      <input id="edit-note" placeholder="หมายเหตุ (ไม่บังคับ)">
+    </div>
+
+    <div id="edit-err" style="display:none;background:#fef2f2;border:1.5px solid #fca5a5;border-radius:0.875rem;padding:0.65rem 1rem;color:#dc2626;font-size:0.83rem;font-weight:700;text-align:center"></div>
+
+    <button class="btn btn-yellow" id="edit-saveBtn" onclick="saveEdit()">💾 &nbsp;บันทึกการแก้ไข</button>
+    <button class="btn btn-ghost" onclick="closeEdit()">ยกเลิก</button>
+  </div>
+</div>
+
 <div id="toast" class="toast"></div>
 
 <script>
@@ -540,13 +552,9 @@ let dashData   = null
 let dashPeriod = 'today'
 let sumPeriod  = 'week'
 
-/* ─── STORAGE HELPERS (fail-safe, no crash if blocked) ─── */
-function store_get(k) {
-  try { return localStorage.getItem(k) } catch(_) { return null }
-}
-function store_set(k,v) {
-  try { localStorage.setItem(k,v) } catch(_) {}
-}
+/* ─── STORAGE HELPERS ─── */
+function store_get(k) { try { return localStorage.getItem(k) } catch(_) { return null } }
+function store_set(k,v) { try { localStorage.setItem(k,v) } catch(_) {} }
 
 /* ─── INIT ─── */
 window.addEventListener('DOMContentLoaded', () => {
@@ -565,25 +573,15 @@ function saveSetup() {
   const url = (document.getElementById('setup-url').value || '').trim()
   const err = document.getElementById('setup-err')
   err.style.display = 'none'
-
-  if (!url) {
-    return showErr(err, '⚠️ กรุณากรอก URL ก่อน')
-  }
-  if (!url.startsWith(VALID_PREFIX)) {
-    return showErr(err, '❌ URL ต้องขึ้นต้นด้วย:\nhttps://script.google.com/macros/s/')
-  }
-  if (!url.endsWith('/exec')) {
-    return showErr(err, '❌ URL ต้องลงท้ายด้วย /exec')
-  }
-
+  if (!url) return showErr(err, '⚠️ กรุณากรอก URL ก่อน')
+  if (!url.startsWith(VALID_PREFIX)) return showErr(err, '❌ URL ต้องขึ้นต้นด้วย:\nhttps://script.google.com/macros/s/')
+  if (!url.endsWith('/exec')) return showErr(err, '❌ URL ต้องลงท้ายด้วย /exec')
   API_URL = url
   store_set('laundry_v3_url', url)
   toast('✅ บันทึก URL สำเร็จ!')
   goTo('menu')
 }
-function showErr(el, msg) {
-  el.textContent = msg; el.style.display = 'block'
-}
+function showErr(el, msg) { el.textContent = msg; el.style.display = 'block' }
 
 /* ─── NAV ─── */
 function goTo(s) {
@@ -591,13 +589,9 @@ function goTo(s) {
   document.getElementById('sec-' + s).classList.add('active')
   window.scrollTo({ top:0, behavior:'smooth' })
 }
-
 function show(s) {
   const needApi = ['receive','deliver','search','dashboard','summary']
-  if (needApi.includes(s) && !API_URL) {
-    toast('⚠️ กรุณาตั้งค่า API URL ก่อน')
-    goTo('setup'); return
-  }
+  if (needApi.includes(s) && !API_URL) { toast('⚠️ กรุณาตั้งค่า API URL ก่อน'); goTo('setup'); return }
   goTo(s)
   if (s === 'dashboard') loadDashboard()
   if (s === 'summary')   loadSummary()
@@ -619,13 +613,18 @@ function calcAmt(p) {
   document.getElementById(p+'-amount').value = a.toFixed(2)
   document.getElementById(p+'-amtDisp').textContent = a > 0 ? a.toFixed(2)+' ฿' : '0.00 ฿'
 }
-
+function calcEditAmt() {
+  const q = parseFloat(document.getElementById('edit-qty').value) || 0
+  const a = q * RATE
+  document.getElementById('edit-amount').value = a.toFixed(2)
+  document.getElementById('edit-amtDisp').textContent = a > 0 ? a.toFixed(2)+' ฿' : '0.00 ฿'
+}
 function toggleSlip(p) {
   const pay = document.getElementById(p+'-payment').value
   document.getElementById(p+'-slipArea').style.display = pay === 'โอนเงิน' ? '' : 'none'
 }
 
-/* ─── FILE PREVIEW ─── */
+/* ─── FILE ─── */
 function prevFile(inId, imgId) {
   const f = document.getElementById(inId).files[0]
   const img = document.getElementById(imgId)
@@ -644,6 +643,35 @@ function toB64(file) {
   })
 }
 
+/* ═══════════════════════════════════════════
+   FIX: apiGet / apiPost — แก้ปัญหา CORS
+   Google Apps Script ต้องการ redirect:follow
+   และ mode:'cors' พร้อม no-cache
+   ═══════════════════════════════════════════ */
+async function apiGet(params = '') {
+  const url = API_URL + (params ? (params.startsWith('?') ? params : '?' + params) : '')
+  const res = await fetch(url, {
+    method: 'GET',
+    redirect: 'follow',
+    cache: 'no-cache'
+  })
+  if (!res.ok) throw new Error('Server ตอบ HTTP ' + res.status)
+  return res.json()
+}
+
+async function apiPost(payload) {
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    redirect: 'follow',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  })
+  if (!res.ok) throw new Error('Server ตอบ HTTP ' + res.status)
+  let data = {}
+  try { data = await res.json() } catch(_) { data = { orderId: '—' } }
+  return data
+}
+
 /* ─── SUBMIT ─── */
 async function submitForm(type) {
   const p       = type === 'receive' ? 'r' : 'd'
@@ -655,9 +683,9 @@ async function submitForm(type) {
   const workEl  = document.getElementById(p+'-work')
   const slipEl  = document.getElementById(p+'-slip')
 
-  if (!name)                                                     { toast('⚠️ กรุณาเลือกชื่อลูกค้า'); return }
-  if (!qty || parseFloat(qty) < 1)                               { toast('⚠️ กรุณากรอกจำนวนชิ้น'); return }
-  if (payment === 'โอนเงิน' && slipEl && !slipEl.files[0])      { toast('⚠️ กรุณาแนบสลิปโอนเงิน'); return }
+  if (!name)                                                { toast('⚠️ กรุณาเลือกชื่อลูกค้า'); return }
+  if (!qty || parseFloat(qty) < 1)                          { toast('⚠️ กรุณากรอกจำนวนชิ้น'); return }
+  if (payment === 'โอนเงิน' && slipEl && !slipEl.files[0]) { toast('⚠️ กรุณาแนบสลิปโอนเงิน'); return }
 
   const btn = document.getElementById(p+'-submitBtn')
   const orig = btn.innerHTML
@@ -678,20 +706,10 @@ async function submitForm(type) {
       payload.slipName   = sf.name
       payload.slipType   = sf.type
     }
-
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
-    })
-    let data = {}
-    try { data = await res.json() } catch(_) { data = { orderId: '—' } }
-
+    const data = await apiPost(payload)
     const el = document.getElementById(p+'-result')
     el.style.display = 'block'
     el.innerHTML = `✅ บันทึกสำเร็จ! &nbsp; Order: <b>${data.orderId ?? '—'}</b>`
-
-    // reset
     ;[p+'-name',p+'-qty',p+'-note'].forEach(id => document.getElementById(id).value = '')
     document.getElementById(p+'-amount').value = '0'
     document.getElementById(p+'-amtDisp').textContent = '0.00 ฿'
@@ -717,12 +735,8 @@ async function doSearch() {
   btn.innerHTML = `<span class="spinner"></span> กำลังค้นหา...`
   btn.disabled  = true
   box.innerHTML = ''
-
   try {
-    const url  = API_URL + (name ? '?name=' + encodeURIComponent(name) : '')
-    const res  = await fetch(url)
-    const data = await res.json()
-
+    const data = await apiGet(name ? 'name=' + encodeURIComponent(name) : '')
     if (!Array.isArray(data) || data.length === 0) {
       box.innerHTML = `<div style="text-align:center;padding:2rem;color:#94a3b8">
         <div style="font-size:2rem">🔎</div>
@@ -739,16 +753,27 @@ async function doSearch() {
 }
 
 function renderOrder(o) {
-  const isDel   = o.type === 'deliver'
+  const isDel    = o.type === 'deliver'
   const payBadge = o.payment === 'โอนเงิน' ? 'b-transfer' : 'b-cash'
   const payIcon  = o.payment === 'โอนเงิน' ? '🏦' : '💵'
   const wLink    = o.work ? `<a href="${o.work}" target="_blank" style="color:#0ea5e9;font-size:0.78rem;text-decoration:none">📷 รูปผ้า</a>` : ''
   const sLink    = o.slip ? `<a href="${o.slip}" target="_blank" style="color:#0ea5e9;font-size:0.78rem;text-decoration:none">🧾 สลิป</a>` : ''
   const note     = o.note ? `<div style="font-size:0.78rem;color:#94a3b8;margin-top:4px">📝 ${o.note}</div>` : ''
+  const rowId    = o.rowId || o.id || ''
+  const orderId  = o.orderId || o.id || '—'
+
+  /* ปุ่มแก้ไข — encode ข้อมูลเป็น JSON แล้วส่งเข้า openEdit */
+  const editData = encodeURIComponent(JSON.stringify({
+    rowId, type: o.type,
+    name: o.name, qty: o.qty,
+    payment: o.payment, note: o.note || '',
+    orderId
+  }))
+
   return `
     <div class="order-card ${isDel?'deliver':'receive'}">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-        <span style="font-weight:800;color:#334155;font-size:0.88rem">#${o.orderId||o.id||'—'}</span>
+        <span style="font-weight:800;color:#334155;font-size:0.88rem">#${orderId}</span>
         <span style="font-size:0.73rem;color:#94a3b8">${o.date||''} ${o.time||''}</span>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px">
@@ -758,28 +783,84 @@ function renderOrder(o) {
       </div>
       <div style="font-size:0.88rem;color:#475569;font-weight:600">🧺 ${o.qty} ชิ้น &nbsp;·&nbsp; 💰 ${Number(o.amount).toLocaleString('th-TH',{minimumFractionDigits:2})} บาท</div>
       ${note}
-      <div style="display:flex;gap:12px;margin-top:6px">${wLink}${sLink}</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
+        <div style="display:flex;gap:12px">${wLink}${sLink}</div>
+        ${rowId ? `<button onclick='openEdit(${editData})' style="font-size:0.75rem;font-weight:700;color:#f59e0b;background:rgba(245,158,11,0.1);border:1.5px solid rgba(245,158,11,0.3);border-radius:0.5rem;padding:0.2rem 0.65rem;cursor:pointer;font-family:inherit;transition:all 0.15s" onmouseover="this.style.background='rgba(245,158,11,0.2)'" onmouseout="this.style.background='rgba(245,158,11,0.1)'">✏️ แก้ไข</button>` : ''}
+      </div>
     </div>`
+}
+
+/* ═══════════════════════════════════
+   EDIT MODAL
+   ═══════════════════════════════════ */
+function openEdit(o) {
+  document.getElementById('edit-rowId').value   = o.rowId || ''
+  document.getElementById('edit-type').value    = o.type  || ''
+  document.getElementById('edit-idLabel').textContent = '#' + (o.orderId || '')
+  document.getElementById('edit-name').value    = o.name    || ''
+  document.getElementById('edit-qty').value     = o.qty     || ''
+  document.getElementById('edit-payment').value = o.payment || 'เงินสด'
+  document.getElementById('edit-note').value    = o.note    || ''
+  document.getElementById('edit-err').style.display = 'none'
+  calcEditAmt()
+  document.getElementById('editModal').classList.add('open')
+}
+
+function closeEdit() {
+  document.getElementById('editModal').classList.remove('open')
+}
+
+function closeEditIfOutside(e) {
+  if (e.target === document.getElementById('editModal')) closeEdit()
+}
+
+async function saveEdit() {
+  const rowId   = document.getElementById('edit-rowId').value
+  const type    = document.getElementById('edit-type').value
+  const name    = document.getElementById('edit-name').value
+  const qty     = document.getElementById('edit-qty').value.trim()
+  const amount  = document.getElementById('edit-amount').value
+  const payment = document.getElementById('edit-payment').value
+  const note    = document.getElementById('edit-note').value.trim()
+  const errEl   = document.getElementById('edit-err')
+  errEl.style.display = 'none'
+
+  if (!name)                        { errEl.textContent='⚠️ กรุณาเลือกชื่อลูกค้า'; errEl.style.display='block'; return }
+  if (!qty || parseFloat(qty) < 1)  { errEl.textContent='⚠️ กรุณากรอกจำนวนชิ้น';   errEl.style.display='block'; return }
+
+  const btn  = document.getElementById('edit-saveBtn')
+  const orig = btn.innerHTML
+  btn.innerHTML = `<span class="spinner" style="border-top-color:#78350f"></span> กำลังบันทึก...`
+  btn.disabled  = true
+
+  try {
+    const data = await apiPost({ action:'edit', rowId, type, name, qty, amount, payment, note })
+    if (data.status === 'error') throw new Error(data.message || 'แก้ไขไม่สำเร็จ')
+    toast('✅ แก้ไขรายการสำเร็จ!')
+    closeEdit()
+    doSearch()   /* โหลดรายการใหม่ */
+  } catch(err) {
+    errEl.textContent = '❌ ' + err.message
+    errEl.style.display = 'block'
+  } finally {
+    btn.innerHTML = orig; btn.disabled = false
+  }
 }
 
 /* ─── DASHBOARD ─── */
 async function loadDashboard() {
   if (!API_URL) return
-
   document.getElementById('dashStats').innerHTML = `
     <div class="skel col-span-2" style="height:78px"></div>
     <div class="skel" style="height:78px"></div>
     <div class="skel" style="height:78px"></div>`
-  document.getElementById('custTable').innerHTML   = `<div class="skel" style="height:80px"></div>`
+  document.getElementById('custTable').innerHTML    = `<div class="skel" style="height:80px"></div>`
   document.getElementById('recentOrders').innerHTML = `
     <div class="skel" style="height:60px"></div>
     <div class="skel" style="height:60px"></div>
     <div class="skel" style="height:60px"></div>`
-
   try {
-    const res = await fetch(API_URL + '?action=dashboard')
-    if (!res.ok) throw new Error('Server ตอบ HTTP ' + res.status)
-    dashData = await res.json()
+    dashData = await apiGet('action=dashboard')
     renderDash()
   } catch(err) {
     document.getElementById('dashStats').innerHTML = `
@@ -810,14 +891,11 @@ function setDashP(p, btn) {
 function renderDash() {
   if (!dashData) return
   const d = dashData[dashPeriod] || { receive:0, deliver:0, amount:0 }
-
   document.getElementById('dashStats').innerHTML = `
     <div class="stat-card s-blue col-span-2">
       <div class="stat-icon">💰</div>
-      <div>
-        <div class="stat-label">รายรับรวม</div>
-        <div class="stat-val">${Number(d.amount).toLocaleString('th-TH',{minimumFractionDigits:2})} บาท</div>
-      </div>
+      <div><div class="stat-label">รายรับรวม</div>
+        <div class="stat-val">${Number(d.amount).toLocaleString('th-TH',{minimumFractionDigits:2})} บาท</div></div>
     </div>
     <div class="stat-card s-green">
       <div class="stat-icon">📥</div>
@@ -860,12 +938,8 @@ async function loadSummary() {
   if (!API_URL) return
   const name = document.getElementById('sum-name')?.value || ''
   document.getElementById('summaryTable').innerHTML = `<div class="skel" style="height:120px"></div>`
-
   try {
-    const res  = await fetch(`${API_URL}?action=summary&period=${sumPeriod}&name=${encodeURIComponent(name)}`)
-    if (!res.ok) throw new Error('HTTP ' + res.status)
-    const rows = await res.json()
-
+    const rows = await apiGet(`action=summary&period=${sumPeriod}&name=${encodeURIComponent(name)}`)
     if (!Array.isArray(rows) || !rows.length) {
       document.getElementById('summaryTable').innerHTML = `<div style="text-align:center;color:#94a3b8;padding:2rem;font-size:0.85rem">ไม่มีข้อมูล</div>`
       return
