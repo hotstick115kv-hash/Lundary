@@ -752,6 +752,9 @@ async function doSearch() {
   }
 }
 
+/* ── orderCache: เก็บ object ของแต่ละ order ไว้ใน memory เพื่อให้ปุ่มแก้ไขดึงได้ปลอดภัย ── */
+const orderCache = {}
+
 function renderOrder(o) {
   const isDel    = o.type === 'deliver'
   const payBadge = o.payment === 'โอนเงิน' ? 'b-transfer' : 'b-cash'
@@ -759,16 +762,19 @@ function renderOrder(o) {
   const wLink    = o.work ? `<a href="${o.work}" target="_blank" style="color:#0ea5e9;font-size:0.78rem;text-decoration:none">📷 รูปผ้า</a>` : ''
   const sLink    = o.slip ? `<a href="${o.slip}" target="_blank" style="color:#0ea5e9;font-size:0.78rem;text-decoration:none">🧾 สลิป</a>` : ''
   const note     = o.note ? `<div style="font-size:0.78rem;color:#94a3b8;margin-top:4px">📝 ${o.note}</div>` : ''
-  const rowId    = o.rowId || o.id || ''
+  const rowId    = String(o.rowId || o.id || '')
   const orderId  = o.orderId || o.id || '—'
 
-  /* ปุ่มแก้ไข — encode ข้อมูลเป็น JSON แล้วส่งเข้า openEdit */
-  const editData = encodeURIComponent(JSON.stringify({
-    rowId, type: o.type,
-    name: o.name, qty: o.qty,
-    payment: o.payment, note: o.note || '',
-    orderId
-  }))
+  /* เก็บ object ไว้ใน cache โดยใช้ rowId เป็น key */
+  if (rowId) orderCache[rowId] = o
+
+  const editBtn = rowId
+    ? `<button class="edit-btn" data-rowid="${rowId}"
+         style="font-size:0.75rem;font-weight:700;color:#f59e0b;
+                background:rgba(245,158,11,0.1);border:1.5px solid rgba(245,158,11,0.3);
+                border-radius:0.5rem;padding:0.25rem 0.75rem;cursor:pointer;
+                font-family:inherit;transition:background 0.15s">✏️ แก้ไข</button>`
+    : ''
 
   return `
     <div class="order-card ${isDel?'deliver':'receive'}">
@@ -785,23 +791,47 @@ function renderOrder(o) {
       ${note}
       <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
         <div style="display:flex;gap:12px">${wLink}${sLink}</div>
-        ${rowId ? `<button onclick='openEdit(${editData})' style="font-size:0.75rem;font-weight:700;color:#f59e0b;background:rgba(245,158,11,0.1);border:1.5px solid rgba(245,158,11,0.3);border-radius:0.5rem;padding:0.2rem 0.65rem;cursor:pointer;font-family:inherit;transition:all 0.15s" onmouseover="this.style.background='rgba(245,158,11,0.2)'" onmouseout="this.style.background='rgba(245,158,11,0.1)'">✏️ แก้ไข</button>` : ''}
+        ${editBtn}
       </div>
     </div>`
+}
+
+/* delegate click จาก #orders และ #recentOrders → ปุ่ม .edit-btn */
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('.edit-btn')
+  if (!btn) return
+  const rowId = btn.dataset.rowid
+  const o = orderCache[rowId]
+  if (o) openEdit(o)
+})
 }
 
 /* ═══════════════════════════════════
    EDIT MODAL
    ═══════════════════════════════════ */
 function openEdit(o) {
-  document.getElementById('edit-rowId').value   = o.rowId || ''
-  document.getElementById('edit-type').value    = o.type  || ''
-  document.getElementById('edit-idLabel').textContent = '#' + (o.orderId || '')
-  document.getElementById('edit-name').value    = o.name    || ''
-  document.getElementById('edit-qty').value     = o.qty     || ''
-  document.getElementById('edit-payment').value = o.payment || 'เงินสด'
-  document.getElementById('edit-note').value    = o.note    || ''
+  document.getElementById('edit-rowId').value = o.rowId || ''
+  document.getElementById('edit-type').value  = o.type  || ''
+  document.getElementById('edit-idLabel').textContent = '#' + (o.orderId || o.rowId || '')
+  document.getElementById('edit-qty').value   = Number(o.qty) || ''
+  document.getElementById('edit-note').value  = o.note || ''
   document.getElementById('edit-err').style.display = 'none'
+
+  /* set select: ชื่อลูกค้า */
+  const nameEl = document.getElementById('edit-name')
+  nameEl.value = o.name || ''
+  if (nameEl.value !== o.name && o.name) {
+    const opt = document.createElement('option')
+    opt.value = o.name; opt.textContent = o.name
+    nameEl.appendChild(opt)
+    nameEl.value = o.name
+  }
+
+  /* set select: วิธีชำระเงิน */
+  const payEl = document.getElementById('edit-payment')
+  payEl.value = o.payment || 'เงินสด'
+  if (!payEl.value) payEl.value = 'เงินสด'
+
   calcEditAmt()
   document.getElementById('editModal').classList.add('open')
 }
