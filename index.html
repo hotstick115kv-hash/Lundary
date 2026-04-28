@@ -762,19 +762,19 @@ function renderOrder(o) {
   const wLink    = o.work ? `<a href="${o.work}" target="_blank" style="color:#0ea5e9;font-size:0.78rem;text-decoration:none">📷 รูปผ้า</a>` : ''
   const sLink    = o.slip ? `<a href="${o.slip}" target="_blank" style="color:#0ea5e9;font-size:0.78rem;text-decoration:none">🧾 สลิป</a>` : ''
   const note     = o.note ? `<div style="font-size:0.78rem;color:#94a3b8;margin-top:4px">📝 ${o.note}</div>` : ''
-  const rowId    = String(o.rowId || o.id || '')
-  const orderId  = o.orderId || o.id || '—'
+  // rowId: ใช้ค่าจาก API ถ้ามี ถ้าไม่มีให้ใช้ orderId แทน (fallback)
+  const rowId   = String(o.rowId || o.id || '')
+  const orderId = o.orderId || o.id || '—'
+  // cacheKey: ใช้ rowId ถ้ามี มิฉะนั้นใช้ orderId เพื่อให้มีปุ่มแก้ไขเสมอ
+  const cacheKey = rowId || orderId
 
-  /* เก็บ object ไว้ใน cache โดยใช้ rowId เป็น key */
-  if (rowId) orderCache[rowId] = o
+  orderCache[cacheKey] = { ...o, _cacheKey: cacheKey }
 
-  const editBtn = rowId
-    ? `<button class="edit-btn" data-rowid="${rowId}"
-         style="font-size:0.75rem;font-weight:700;color:#f59e0b;
-                background:rgba(245,158,11,0.1);border:1.5px solid rgba(245,158,11,0.3);
-                border-radius:0.5rem;padding:0.25rem 0.75rem;cursor:pointer;
-                font-family:inherit;transition:background 0.15s">✏️ แก้ไข</button>`
-    : ''
+  const editBtn = `<button class="edit-btn" data-rowid="${cacheKey}"
+       style="font-size:0.75rem;font-weight:700;color:#f59e0b;
+              background:rgba(245,158,11,0.1);border:1.5px solid rgba(245,158,11,0.3);
+              border-radius:0.5rem;padding:0.25rem 0.75rem;cursor:pointer;
+              font-family:inherit;transition:background 0.15s">✏️ แก้ไข</button>`
 
   return `
     <div class="order-card ${isDel?'deliver':'receive'}">
